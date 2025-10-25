@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SliderAdapterCatGeneral</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation.report</a>
+</div>
+
+<h1>Coverage Summary for Class: SliderAdapterCatGeneral (com.spenditure.presentation.report)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SliderAdapterCatGeneral</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.presentation.report;
+&nbsp;
+&nbsp;import android.content.Context;
+&nbsp;import android.view.LayoutInflater;
+&nbsp;import android.view.View;
+&nbsp;import android.view.ViewGroup;
+&nbsp;import android.widget.LinearLayout;
+&nbsp;import android.widget.TextView;
+&nbsp;
+&nbsp;import androidx.annotation.NonNull;
+&nbsp;import androidx.viewpager.widget.PagerAdapter;
+&nbsp;
+&nbsp;import com.example.spenditure.R;
+&nbsp;import com.spenditure.logic.CategoryHandler;
+&nbsp;import com.spenditure.logic.GeneralReportHandler;
+&nbsp;import com.spenditure.logic.ReportManager;
+&nbsp;import com.spenditure.logic.UserHandler;
+&nbsp;import com.spenditure.object.MainCategory;
+&nbsp;import com.spenditure.presentation.UIUtility;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Slider for Report on each category
+&nbsp; * @author Bao Ngo
+&nbsp; * @version 04 Mar 2024
+&nbsp; */
+&nbsp;
+&nbsp;public class SliderAdapterCatGeneral extends PagerAdapter {
+&nbsp;    private Context context;
+&nbsp;    private LayoutInflater inflater;
+&nbsp;    private ReportManager reportManager;
+&nbsp;    private GeneralReportHandler generalReportHandler;
+&nbsp;    private CategoryHandler categoryHandler;
+&nbsp;    private List&lt;MainCategory&gt; categoryList;
+<b class="nc">&nbsp;    private int[] list_bg_color = { //Default background color for each slider</b>
+&nbsp;      R.drawable.background_light_green,
+&nbsp;      R.drawable.background_dark_blue
+&nbsp;    };
+&nbsp;
+<b class="nc">&nbsp;    public SliderAdapterCatGeneral(Context context, List&lt;MainCategory&gt; categoryList){</b>
+<b class="nc">&nbsp;        this.context = context;</b>
+<b class="nc">&nbsp;        this.reportManager = new ReportManager(true);</b>
+<b class="nc">&nbsp;        this.generalReportHandler = new GeneralReportHandler(true);</b>
+<b class="nc">&nbsp;        this.categoryHandler = new CategoryHandler(true);</b>
+<b class="nc">&nbsp;        this.categoryList = categoryList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int getCount() {
+<b class="nc">&nbsp;        return categoryHandler.getAllCategory(UserManager.getUserID()).size();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+<b class="nc">&nbsp;        return (view == (LinearLayout)object);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @NonNull
+&nbsp;    @Override
+&nbsp;    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+<b class="nc">&nbsp;        inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);</b>
+<b class="nc">&nbsp;        View view = inflater.inflate(R.layout.report_slide,container,false);</b>
+<b class="nc">&nbsp;        LinearLayout linearLayout = view.findViewById(R.id.report_slider_layout);</b>
+<b class="nc">&nbsp;        MainCategory currCategory = categoryList.get(position);</b>
+&nbsp;
+&nbsp;        //Get data from report manager
+<b class="nc">&nbsp;        String countTransactionsString =  UIUtility.cleanTransactionNumberString(generalReportHandler.numTransactions(UserManager.getUserID(), currCategory.getCategoryID()));</b>
+<b class="nc">&nbsp;        String totalTransactionsString= UIUtility.cleanTotalString(generalReportHandler.totalSpending(UserManager.getUserID(), currCategory.getCategoryID()));</b>
+<b class="nc">&nbsp;        String averageString=  UIUtility.cleanAverageString(generalReportHandler.averageSpending(UserManager.getUserID(), currCategory.getCategoryID()));</b>
+<b class="nc">&nbsp;        String percentageString = UIUtility.cleanPercentageString(generalReportHandler.percentage(UserManager.getUserID(), currCategory.getCategoryID()));</b>
+&nbsp;
+&nbsp;        //query UI components
+<b class="nc">&nbsp;        TextView tittle = view.findViewById(R.id.slide_tittle);</b>
+<b class="nc">&nbsp;        TextView countTransactions = view.findViewById(R.id.textview_catReport_transactionsCount);</b>
+<b class="nc">&nbsp;        TextView totalTransactions = view.findViewById(R.id.textview_catReport_total);</b>
+<b class="nc">&nbsp;        TextView average = view.findViewById(R.id.textview_catReport_average);</b>
+<b class="nc">&nbsp;        TextView percentage = view.findViewById(R.id.textview_catReport_percentage);</b>
+&nbsp;
+&nbsp;        //Fill UI component with information
+<b class="nc">&nbsp;        tittle.setText(currCategory.getName());</b>
+<b class="nc">&nbsp;        countTransactions.setText(countTransactionsString);</b>
+<b class="nc">&nbsp;        totalTransactions.setText(totalTransactionsString);</b>
+<b class="nc">&nbsp;        average.setText(averageString);</b>
+<b class="nc">&nbsp;        percentage.setText(percentageString);</b>
+&nbsp;
+<b class="nc">&nbsp;        linearLayout.setBackgroundResource(list_bg_color[position % list_bg_color.length]);</b>
+<b class="nc">&nbsp;        container.addView(view);</b>
+<b class="nc">&nbsp;        return view;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+<b class="nc">&nbsp;        container.removeView((LinearLayout)object);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

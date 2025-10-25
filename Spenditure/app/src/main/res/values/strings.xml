@@ -1,0 +1,55 @@
+<resources>
+
+    <string name="app_name">Spenditure</string>
+    <string name="title_home">Home</string>
+    <string name="title_reports">Reports</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_category">Category</string>
+    <string name="title_view_transactions">View Transactions</string>
+    <string name="title_create_transaction">Create Transaction</string>
+    <string name="title_edit_transaction">Edit Transaction</string>
+    <string name="title_activity_home">Home Activity</string>
+    <string name="title_profile">Your Profile</string>
+    <string name="title_stats">Stats</string>
+    <string name="title_view_goals">View Goals</string>
+    <string name="title_create_goal">Create Goal</string>
+
+    // Transaction Activities
+    <string name="field_what_the_heck">What the heck?</string>
+    <string name="field_date">Date</string>
+    <string name="field_place">Place</string>
+    <string name="field_amount">Amount</string>
+    <string name="field_type">Type</string>
+    <string name="field_comments">Comments</string>
+    <string name="field_categories">Category</string>
+    <string name="field_image">Image</string>
+    <string name="label_take_image">Take Image</string>
+    <string name="label_view_image">View Image</string>
+    <string name="label_retake_image">Retake</string>
+    <string name="label_confirm">Confirm</string>
+    <string name="label_back">Back</string>
+
+    // View Transaction Activity
+    <string name="label_edit">Edit</string>
+    <string name="label_delete">Delete</string>
+
+    // User Profile/Login Activity
+    <string name="label_username">Username</string>
+    <string name="label_password">Password</string>
+    <string name="label_current_password">Current Password</string>
+    <string name="label_new_password">New Password</string>
+    <string name="label_logout">Logout</string>
+    <string name="label_login">Login</string>
+    <string name="label_save_changes">Save Changes</string>
+    <string name="label_profile_update">Update Your Credentials</string>
+
+    // Registration Activity
+    <string name="label_register">Register</string>
+    <string name="label_security_question">Security Question</string>
+    <string name="label_answer">Answer</string>
+    <string name="label_email">Email</string>
+
+    // Goal Activities
+    <string name="label_goal_name">Goal Name</string>
+    <string name="label_complete_by">Complete By</string>
+</resources>

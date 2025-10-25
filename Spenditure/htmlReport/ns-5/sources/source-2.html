@@ -1,0 +1,300 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > DateTimeAdjuster</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.logic</a>
+</div>
+
+<h1>Coverage Summary for Class: DateTimeAdjuster (com.spenditure.logic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DateTimeAdjuster</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/72)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * DateTimeAdjuster.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Toran Pillay, 7842389
+&nbsp; * @date Tuesday, March 4, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file contains all of the methods necessary to ensure that adjusted DateTimes
+&nbsp; * remain valid, guaranteeing that dates always make sense whenever you modify them.
+&nbsp; **/
+&nbsp;
+&nbsp;package com.spenditure.logic;
+&nbsp;
+&nbsp;import static com.spenditure.logic.DateTimeValidator.*;
+&nbsp;import static java.lang.Math.abs;
+&nbsp;
+&nbsp;import com.spenditure.logic.exceptions.InvalidDateException;
+&nbsp;import com.spenditure.logic.exceptions.InvalidDateTimeException;
+&nbsp;import com.spenditure.object.DateTime;
+&nbsp;
+<b class="nc">&nbsp;public class DateTimeAdjuster {</b>
+&nbsp;
+&nbsp;    public static DateTime correctDateTime(DateTime toFix) {
+&nbsp;
+<b class="nc">&nbsp;        boolean fixed = false;</b>
+<b class="nc">&nbsp;        DateTime result = toFix.copy();</b>
+&nbsp;
+<b class="nc">&nbsp;        while(!fixed) {</b>
+&nbsp;
+&nbsp;            try {
+&nbsp;
+<b class="nc">&nbsp;                validateDateTime(result);</b>
+<b class="nc">&nbsp;                fixed = true;</b>
+&nbsp;
+<b class="nc">&nbsp;            } catch(InvalidDateTimeException ignore) {</b>
+&nbsp;
+<b class="nc">&nbsp;                fixSeconds(result);</b>
+&nbsp;
+<b class="nc">&nbsp;                fixMinutes(result);</b>
+&nbsp;
+<b class="nc">&nbsp;                fixHours(result);</b>
+&nbsp;
+<b class="nc">&nbsp;                fixDays(result);</b>
+&nbsp;
+<b class="nc">&nbsp;                fixMonths(result);</b>
+&nbsp;
+<b class="nc">&nbsp;                checkYears(result);</b>
+&nbsp;
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;   private static void fixSeconds(DateTime dateTime) {
+&nbsp;
+<b class="nc">&nbsp;        int seconds = dateTime.getSeconds();</b>
+&nbsp;
+<b class="nc">&nbsp;        while(seconds &lt; 0 || seconds &gt;= MAX_SECONDS) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if (seconds &lt; 0) {</b>
+<b class="nc">&nbsp;                dateTime.absoluteAdjust(0, 0, 0, 0, -1, MAX_SECONDS);</b>
+&nbsp;
+&nbsp;            } else {
+<b class="nc">&nbsp;                dateTime.absoluteAdjust(0, 0, 0, 0, 1, -MAX_SECONDS);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            seconds = dateTime.getSeconds();</b>
+&nbsp;        }
+&nbsp;   }
+&nbsp;
+&nbsp;   private static void fixMinutes(DateTime dateTime) {
+&nbsp;
+<b class="nc">&nbsp;       int minutes = dateTime.getMinute();</b>
+&nbsp;
+<b class="nc">&nbsp;       while(minutes &lt; 0 || minutes &gt;= MAX_MINUTES) {</b>
+&nbsp;
+<b class="nc">&nbsp;           if (minutes &lt; 0) {</b>
+<b class="nc">&nbsp;               dateTime.absoluteAdjust(0, 0, 0, -1, MAX_MINUTES, 0);</b>
+&nbsp;
+&nbsp;           } else {
+<b class="nc">&nbsp;               dateTime.absoluteAdjust(0, 0, 0, 1, -MAX_MINUTES, 0);</b>
+&nbsp;           }
+<b class="nc">&nbsp;           minutes = dateTime.getMinute();</b>
+&nbsp;
+&nbsp;       }
+&nbsp;   }
+&nbsp;
+&nbsp;   private static void fixHours(DateTime dateTime) {
+&nbsp;
+<b class="nc">&nbsp;        int hours = dateTime.getHour();</b>
+&nbsp;
+<b class="nc">&nbsp;        while(hours &lt; 0 || hours &gt;= MAX_HOURS) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if (hours &lt; 0) {</b>
+<b class="nc">&nbsp;                dateTime.absoluteAdjust(0, 0, -1, MAX_HOURS, 0, 0);</b>
+&nbsp;
+&nbsp;            } else {
+<b class="nc">&nbsp;                dateTime.absoluteAdjust(0, 0, 1, -MAX_HOURS, 0, 0);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            hours = dateTime.getHour();</b>
+&nbsp;        }
+&nbsp;   }
+&nbsp;
+&nbsp;   private static void fixDays(DateTime dateTime) {
+&nbsp;
+<b class="nc">&nbsp;        int days = dateTime.getDay();</b>
+<b class="nc">&nbsp;        int month = dateTime.getMonth();</b>
+<b class="nc">&nbsp;        int year = dateTime.getYear();</b>
+<b class="nc">&nbsp;        int monthLimit = getMonthLimit(month, year);</b>
+&nbsp;
+<b class="nc">&nbsp;        while(days &lt;= 0 || days &gt; monthLimit) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if (days &lt;= 0) {</b>
+<b class="nc">&nbsp;                month = month - 1;</b>
+&nbsp;
+<b class="nc">&nbsp;                if(month &lt;= 0)</b>
+<b class="nc">&nbsp;                    monthLimit = getMonthLimit((abs(month)+12)%13, year);</b>
+&nbsp;                else
+<b class="nc">&nbsp;                    monthLimit = getMonthLimit(month, year);</b>
+&nbsp;
+<b class="nc">&nbsp;                dateTime.absoluteAdjust(0, -1, monthLimit, 0, 0, 0);</b>
+&nbsp;
+&nbsp;            } else {
+<b class="nc">&nbsp;                month = month + 1;</b>
+&nbsp;
+<b class="nc">&nbsp;                if(month &gt;= 13)</b>
+<b class="nc">&nbsp;                    monthLimit = getMonthLimit(month%12, year);</b>
+&nbsp;                else
+<b class="nc">&nbsp;                    monthLimit = getMonthLimit(month, year);</b>
+&nbsp;
+<b class="nc">&nbsp;                dateTime.absoluteAdjust(0, 1, -monthLimit, 0, 0, 0);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            days = dateTime.getDay();</b>
+&nbsp;        }
+&nbsp;   }
+&nbsp;
+&nbsp;   private static void fixMonths(DateTime dateTime) {
+&nbsp;
+<b class="nc">&nbsp;        int months = dateTime.getMonth();</b>
+&nbsp;
+<b class="nc">&nbsp;        while(months &lt;= 0 || months &gt; 12) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if(months &lt;= 0) {</b>
+<b class="nc">&nbsp;                dateTime.absoluteAdjust(-1, 12, 0, 0, 0, 0);</b>
+&nbsp;
+&nbsp;            } else {
+<b class="nc">&nbsp;                dateTime.absoluteAdjust(1, -12, 0, 0, 0, 0);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            months = dateTime.getMonth();</b>
+&nbsp;        }
+&nbsp;   }
+&nbsp;
+&nbsp;   private static void checkYears(DateTime dateTime) throws InvalidDateTimeException {
+&nbsp;
+<b class="nc">&nbsp;        int years = dateTime.getYear();</b>
+&nbsp;
+<b class="nc">&nbsp;        if(years &lt; MIN_YEAR) {</b>
+<b class="nc">&nbsp;            throw new InvalidDateException(&quot;The requested adjustment goes beyond the minimum permitted year (&quot;+MIN_YEAR+&quot;).&quot;);</b>
+<b class="nc">&nbsp;        } else if(years &gt; MAX_YEAR) {</b>
+<b class="nc">&nbsp;            throw new InvalidDateException(&quot;The requested adjustment goes beyond the maximum permitted year (&quot;+MAX_YEAR+&quot;).&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;   }
+&nbsp;
+&nbsp;    private static int getMonthLimit(int month, int year) {
+&nbsp;
+<b class="nc">&nbsp;        int result = 28;</b>
+<b class="nc">&nbsp;        boolean hitLimit = false;</b>
+&nbsp;
+<b class="nc">&nbsp;        DateTime test = new DateTime(year, month, result);</b>
+&nbsp;
+<b class="nc">&nbsp;        while(!hitLimit &amp;&amp; result &lt;= 31) {</b>
+&nbsp;
+&nbsp;            try {
+<b class="nc">&nbsp;                validateDateTime(test);</b>
+&nbsp;
+<b class="nc">&nbsp;                result ++;</b>
+<b class="nc">&nbsp;                test = new DateTime(year, month, result);</b>
+&nbsp;
+<b class="nc">&nbsp;            } catch(InvalidDateException ignore) {</b>
+<b class="nc">&nbsp;                hitLimit = true;</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return result - 1;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

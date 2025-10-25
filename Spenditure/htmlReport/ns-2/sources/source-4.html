@@ -1,0 +1,90 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CategoryPersistence</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.database</a>
+</div>
+
+<h1>Coverage Summary for Class: CategoryPersistence (com.spenditure.database)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">CategoryPersistence</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.database;
+&nbsp;
+&nbsp;import com.spenditure.logic.exceptions.InvalidCategoryException;
+&nbsp;import com.spenditure.object.MainCategory;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * Category database interface
+&nbsp; * @author Bao Ngo
+&nbsp; * @version 06 Feb 2024
+&nbsp; * PURPOSE: Handle all logic related to Category
+&nbsp; */
+&nbsp;public interface CategoryPersistence {
+&nbsp;    List &lt;MainCategory&gt; getAllCategory(int userID);
+&nbsp;    MainCategory addCategory(String categoryName, int userID);
+&nbsp;
+&nbsp;    void deleteCategoryByID(int categoryID) throws InvalidCategoryException;
+&nbsp;
+&nbsp;    MainCategory getCategoryByID(int categoryID) throws InvalidCategoryException;
+&nbsp;
+&nbsp;    void printCategoryTable();
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

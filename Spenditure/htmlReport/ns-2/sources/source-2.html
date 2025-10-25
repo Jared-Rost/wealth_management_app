@@ -1,0 +1,139 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SQLDatabase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.database</a>
+</div>
+
+<h1>Coverage Summary for Class: SQLDatabase (com.spenditure.database)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SQLDatabase</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.database;
+&nbsp;
+&nbsp;import android.content.Context;
+&nbsp;import android.database.sqlite.SQLiteDatabase;
+&nbsp;import android.database.sqlite.SQLiteOpenHelper;
+&nbsp;
+&nbsp;public class SQLDatabase extends SQLiteOpenHelper {
+&nbsp;
+&nbsp;    private static final String DATABASE_NAME = &quot;Spenditure.db&quot;;
+&nbsp;    private static final int DATABASE_VERSION = 1;
+&nbsp;    public SQLDatabase(Context context) {
+<b class="nc">&nbsp;        super(context, DATABASE_NAME, null, DATABASE_VERSION);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onCreate(SQLiteDatabase db) {
+&nbsp;        // Create tables if not exists
+<b class="nc">&nbsp;        String createUserTable = &quot;CREATE TABLE IF NOT EXISTS users (&quot;</b>
+&nbsp;                + &quot;userID INTEGER PRIMARY KEY AUTOINCREMENT,&quot;
+&nbsp;                + &quot;firstName TEXT,&quot;
+&nbsp;                + &quot;lastName TEXT,&quot;
+&nbsp;                + &quot;email TEXT,&quot;
+&nbsp;                + &quot;password TEXT)&quot;;
+&nbsp;
+<b class="nc">&nbsp;        db.execSQL(createUserTable);</b>
+&nbsp;
+<b class="nc">&nbsp;        String createCategoryTable = &quot;CREATE TABLE IF NOT EXISTS categories (&quot;</b>
+&nbsp;                + &quot;categoryID INTEGER PRIMARY KEY AUTOINCREMENT,&quot;
+&nbsp;                + &quot;categoryName)&quot;;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+&nbsp;        // Upgrade logic, if needed
+<b class="nc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

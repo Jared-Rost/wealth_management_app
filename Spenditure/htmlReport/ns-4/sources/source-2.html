@@ -1,0 +1,436 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TransactionStub</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.database.stub</a>
+</div>
+
+<h1>Coverage Summary for Class: TransactionStub (com.spenditure.database.stub)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransactionStub</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/94)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.database.stub;
+&nbsp;
+&nbsp;import com.spenditure.database.TransactionPersistence;
+&nbsp;import com.spenditure.logic.CategoryHandler;
+&nbsp;import com.spenditure.logic.Comparison.DateNewestFirstComparator;
+&nbsp;import com.spenditure.logic.Comparison.DateOldestFirstComparator;
+&nbsp;import com.spenditure.object.DateTime;
+&nbsp;import com.spenditure.object.IDateTime;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;
+&nbsp;import org.checkerframework.checker.units.qual.A;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.Iterator;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * TransactionStub.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Jared Rost,
+&nbsp; * @date Feb 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file stores information using array lists and has some default transactions for testing purposes
+&nbsp; *  It sorts data and returns an array list for use in the logic layer.
+&nbsp; *  It is in the database layer because it is the stub database, where else would it go?
+&nbsp; *
+&nbsp; **/
+&nbsp;
+&nbsp;public class TransactionStub implements TransactionPersistence {
+&nbsp;
+&nbsp;    private ArrayList&lt;Transaction&gt; transactionList;
+&nbsp;    private CategoryHandler categoryHandler;
+<b class="nc">&nbsp;    private int currentID = 1;</b>
+&nbsp;
+&nbsp;    public TransactionStub()
+<b class="nc">&nbsp;    {</b>
+<b class="nc">&nbsp;        transactionList = new ArrayList&lt;Transaction&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        categoryHandler = new CategoryHandler(true);</b>
+&nbsp;
+&nbsp;//        MainCategory grocery = this.categoryHandler.getCategoryByID(1);
+&nbsp;//        MainCategory food = this.categoryHandler.getCategoryByID(2);
+&nbsp;//        MainCategory stuff = this.categoryHandler.getCategoryByID(3);
+&nbsp;
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Morning Dons&quot;, new DateTime(1,1,1,1,1),
+&nbsp;//                &quot;Mcdonalds&quot;,5.99, &quot;was luke warm today, 2/10&quot;, true, food));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Star Wars Rebels merch&quot;, new DateTime(2024,2,1,16,59),
+&nbsp;//                &quot;Toys R Us&quot;,500.95, &quot;Sabine looking kinda nice O_o&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Shopping spree at the mall&quot;, new DateTime(2023, 5, 20, 15, 30),
+&nbsp;//                &quot;Mall&quot;, 250.50, &quot;Bought clothes and accessories&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Dinner at a fancy restaurant&quot;, new DateTime(2023, 7, 8, 19, 0),
+&nbsp;//                &quot;Gourmet Restaurant&quot;, 150.75, &quot;Celebrated anniversary&quot;, true, food));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Hotel accommodation for business trip&quot;, new DateTime(2023, 8, 15, 12, 0),
+&nbsp;//                &quot;Grand Hotel&quot;, 300.0, &quot;Stayed for 3 nights&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Grocery shopping for the week&quot;, new DateTime(2023, 8, 20, 10, 0),
+&nbsp;//                &quot;Supermarket&quot;, 80.25, &quot;Bought fruits, vegetables, and dairy products&quot;, true, grocery));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Utility bill payment&quot;, new DateTime(2023, 8, 25, 9, 0),
+&nbsp;//                &quot;Utility Company&quot;, 120.0, &quot;Paid electricity and water bills&quot;, true, grocery));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Concert ticket purchase&quot;, new DateTime(2023, 9, 5, 18, 30),
+&nbsp;//                &quot;Concert Hall&quot;, 50.0, &quot;Attended the concert of favorite band&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Car maintenance service&quot;, new DateTime(2023, 9, 10, 8, 0),
+&nbsp;//                &quot;Auto Service Center&quot;, 200.0, &quot;Performed routine maintenance and oil change&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Online shopping for household items&quot;, new DateTime(2023, 9, 15, 16, 0),
+&nbsp;//                &quot;Online Store&quot;, 90.50, &quot;Bought cleaning supplies and kitchenware&quot;, true, grocery));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Movie tickets for family outing&quot;, new DateTime(2023, 9, 20, 14, 0),
+&nbsp;//                &quot;Cinema&quot;, 60.0, &quot;Watched latest blockbuster movie with family&quot;, true, food));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Gym membership subscription&quot;, new DateTime(2023, 9, 25, 17, 0),
+&nbsp;//                &quot;Fitness Center&quot;, 75.0, &quot;Monthly subscription for gym access&quot;, true,stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Restaurant bill for friend&#39;s birthday dinner&quot;, new DateTime(2023, 9, 30, 20, 0),
+&nbsp;//                &quot;Fine Dining Restaurant&quot;, 200.0, &quot;Celebrated friend&#39;s birthday with a fancy dinner&quot;, true, food));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), &quot;Online course enrollment fee&quot;, new DateTime(2023, 10, 5, 11, 0),
+&nbsp;//                &quot;Online Education Platform&quot;, 150.0, &quot;Enrolled in a programming course&quot;, true, grocery));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Morning Dons&quot;, new DateTime(1,1,1,1,1),
+&nbsp;//                &quot;Mcdonalds&quot;,5.99, &quot;was luke warm today, 2/10&quot;, true, food));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Star Wars Rebels merch&quot;, new DateTime(2024,2,1,16,59),
+&nbsp;//                &quot;Toys R Us&quot;,500.95, &quot;Sabine looking kinda nice O_o&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Shopping spree at the mall&quot;, new DateTime(2023, 5, 20, 15, 30),
+&nbsp;//                &quot;Mall&quot;, 250.50, &quot;Bought clothes and accessories&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Dinner at a fancy restaurant&quot;, new DateTime(2023, 7, 8, 19, 0),
+&nbsp;//                &quot;Gourmet Restaurant&quot;, 150.75, &quot;Celebrated anniversary&quot;, true, food));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Hotel accommodation for business trip&quot;, new DateTime(2023, 8, 15, 12, 0),
+&nbsp;//                &quot;Grand Hotel&quot;, 300.0, &quot;Stayed for 3 nights&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Grocery shopping for the week&quot;, new DateTime(2023, 8, 20, 10, 0),
+&nbsp;//                &quot;Supermarket&quot;, 80.25, &quot;Bought fruits, vegetables, and dairy products&quot;, true, grocery));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Utility bill payment&quot;, new DateTime(2023, 8, 25, 9, 0),
+&nbsp;//                &quot;Utility Company&quot;, 120.0, &quot;Paid electricity and water bills&quot;, true, grocery));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Concert ticket purchase&quot;, new DateTime(2023, 9, 5, 18, 30),
+&nbsp;//                &quot;Concert Hall&quot;, 50.0, &quot;Attended the concert of favorite band&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Car maintenance service&quot;, new DateTime(2023, 9, 10, 8, 0),
+&nbsp;//                &quot;Auto Service Center&quot;, 200.0, &quot;Performed routine maintenance and oil change&quot;, true, stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Online shopping for household items&quot;, new DateTime(2023, 9, 15, 16, 0),
+&nbsp;//                &quot;Online Store&quot;, 90.50, &quot;Bought cleaning supplies and kitchenware&quot;, true, grocery));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Movie tickets for family outing&quot;, new DateTime(2023, 9, 20, 14, 0),
+&nbsp;//                &quot;Cinema&quot;, 60.0, &quot;Watched latest blockbuster movie with family&quot;, true, food));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Gym membership subscription&quot;, new DateTime(2023, 9, 25, 17, 0),
+&nbsp;//                &quot;Fitness Center&quot;, 75.0, &quot;Monthly subscription for gym access&quot;, true,stuff));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Restaurant bill for friend&#39;s birthday dinner&quot;, new DateTime(2023, 9, 30, 20, 0),
+&nbsp;//                &quot;Fine Dining Restaurant&quot;, 200.0, &quot;Celebrated friend&#39;s birthday with a fancy dinner&quot;, true, food));
+&nbsp;//        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Online course enrollment fee&quot;, new DateTime(2023, 10, 5, 11, 0),
+&nbsp;//                &quot;Online Education Platform&quot;, 150.0, &quot;Enrolled in a programming course&quot;, true, grocery));
+&nbsp;
+&nbsp;
+&nbsp;        // everything under userID 1
+&nbsp;
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Morning Dons&quot;, new DateTime(1,1,1,1,1, 1),</b>
+&nbsp;                &quot;Mcdonalds&quot;,5.99, &quot;was luke warm today, 2/10&quot;, true, null, 2));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Star Wars Rebels merch&quot;, new DateTime(2024,2,1,16,59, 59),</b>
+&nbsp;                &quot;Toys R Us&quot;,500.95, &quot;Sabine looking kinda nice O_o&quot;, true, null, 3));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Shopping spree at the mall&quot;, new DateTime(2023, 5, 20, 15, 30, 30),</b>
+&nbsp;                &quot;Mall&quot;, 250.50, &quot;Bought clothes and accessories&quot;, true, null, 3));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Dinner at a fancy restaurant&quot;, new DateTime(2023, 7, 8, 19, 0, 0),</b>
+&nbsp;                &quot;Gourmet Restaurant&quot;, 150.75, &quot;Celebrated anniversary&quot;, true, null, 2));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Hotel accommodation for business trip&quot;, new DateTime(2023, 8, 15, 12, 0, 0),</b>
+&nbsp;                &quot;Grand Hotel&quot;, 300.0, &quot;Stayed for 3 nights&quot;, true, null, 3));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Grocery shopping for the week&quot;, new DateTime(2023, 8, 20, 10, 0, 0),</b>
+&nbsp;                &quot;Supermarket&quot;, 80.25, &quot;Bought fruits, vegetables, and dairy products&quot;, true, null, 1));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Utility bill payment&quot;, new DateTime(2023, 8, 25, 9, 0, 0),</b>
+&nbsp;                &quot;Utility Company&quot;, 120.0, &quot;Paid electricity and water bills&quot;, true, null, 1));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Concert ticket purchase&quot;, new DateTime(2023, 9, 5, 18, 30, 30),</b>
+&nbsp;                &quot;Concert Hall&quot;, 50.0, &quot;Attended the concert of favorite band&quot;, true, null, 3));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Car maintenance service&quot;, new DateTime(2023, 9, 10, 8, 0, 0),</b>
+&nbsp;                &quot;Auto Service Center&quot;, 200.0, &quot;Performed routine maintenance and oil change&quot;, true, null, 3));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Online shopping for household items&quot;, new DateTime(2023, 9, 15, 16, 0, 0),</b>
+&nbsp;                &quot;Online Store&quot;, 90.50, &quot;Bought cleaning supplies and kitchenware&quot;, true, null, 1));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Movie tickets for family outing&quot;, new DateTime(2023, 9, 20, 14, 0, 0),</b>
+&nbsp;                &quot;Cinema&quot;, 60.0, &quot;Watched latest blockbuster movie with family&quot;, true, null, 2));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Gym membership subscription&quot;, new DateTime(2023, 9, 25, 17, 0, 0),</b>
+&nbsp;                &quot;Fitness Center&quot;, 75.0, &quot;Monthly subscription for gym access&quot;, true, null, 3));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Restaurant bill for friend&#39;s birthday dinner&quot;, new DateTime(2023, 9, 30, 20, 0, 0),</b>
+&nbsp;                &quot;Fine Dining Restaurant&quot;, 200.0, &quot;Celebrated friend&#39;s birthday with a fancy dinner&quot;, true, null, 2));
+<b class="nc">&nbsp;        transactionList.add(new Transaction(generateUniqueID(), 1, &quot;Online course enrollment fee&quot;, new DateTime(2023, 10, 5, 11, 0, 0),</b>
+&nbsp;                &quot;Online Education Platform&quot;, 150.0, &quot;Enrolled in a programming course&quot;, true, null, 1));
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public int countTransactions() {
+<b class="nc">&nbsp;        return 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Transaction&gt; getAllTransactions(int userID)
+&nbsp;    {
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (int i = 0; i &lt; transactionList.size(); i++) {</b>
+<b class="nc">&nbsp;            if(transactionList.get(i).getUserID() == userID) {</b>
+<b class="nc">&nbsp;                transactions.add(transactionList.get(i));</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return transactions;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Transaction&gt; getAllTransactionsForUser(int userID) {
+<b class="nc">&nbsp;        List&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(Transaction transaction : this.transactionList) {</b>
+<b class="nc">&nbsp;            if(transaction.getUserID() == userID) {</b>
+<b class="nc">&nbsp;                transactions.add(transaction);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return transactions;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addTransaction(Transaction newTransaction)
+&nbsp;    {
+<b class="nc">&nbsp;        for(int i = 0; i &lt; transactionList.size(); i++)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            if(transactionList.get(i).getTransactionID() == newTransaction.getTransactionID())</b>
+&nbsp;            {
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        newTransaction.setTransactionID(generateUniqueID());</b>
+<b class="nc">&nbsp;        transactionList.add(newTransaction);</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean modifyTransaction(Transaction targetTransaction)
+&nbsp;    {
+<b class="nc">&nbsp;        for(int i = 0; i &lt; transactionList.size(); i++)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            if(transactionList.get(i).getTransactionID() == targetTransaction.getTransactionID())</b>
+&nbsp;            {
+<b class="nc">&nbsp;                transactionList.set(i, targetTransaction);</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean deleteTransaction(int transactionID)
+&nbsp;    {
+<b class="nc">&nbsp;        boolean foundTransaction = false;</b>
+&nbsp;
+<b class="nc">&nbsp;        Iterator&lt;Transaction&gt; itr = transactionList.iterator();</b>
+<b class="nc">&nbsp;        while (itr.hasNext())</b>
+&nbsp;        {
+<b class="nc">&nbsp;            Transaction current = itr.next();</b>
+<b class="nc">&nbsp;            if (current.getTransactionID() == transactionID)</b>
+&nbsp;            {
+<b class="nc">&nbsp;                foundTransaction = true;</b>
+<b class="nc">&nbsp;                itr.remove();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return foundTransaction;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Transaction getTransactionByID(int id)
+&nbsp;    {
+<b class="nc">&nbsp;        for(Transaction transaction : this.transactionList)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            if(transaction.getTransactionID() == id){</b>
+<b class="nc">&nbsp;                return transaction;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionByName(int userID, String name) {
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; allTransactionsWithName = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for(Transaction transaction : this.transactionList) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if(transaction.getName().equalsIgnoreCase(name) &amp;&amp; transaction.getUserID() == userID)</b>
+<b class="nc">&nbsp;                allTransactionsWithName.add(transaction);</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return allTransactionsWithName;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionsByPlace(int userID, String place) {
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; allTransactionsWithPlace = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for(Transaction transaction : this.transactionList) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if(transaction.getPlace().equalsIgnoreCase(place) &amp;&amp; transaction.getUserID() == userID)</b>
+<b class="nc">&nbsp;                allTransactionsWithPlace.add(transaction);</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return allTransactionsWithPlace;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionsByAmount(int userID, double lower, double upper) {
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; allTransactionsInBounds = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for(Transaction transaction : this.transactionList) {</b>
+&nbsp;
+<b class="nc">&nbsp;            double amount = transaction.getAmount();</b>
+&nbsp;
+<b class="nc">&nbsp;            if( lower &lt;= amount &amp;&amp; amount &lt;= upper &amp;&amp; transaction.getUserID() == userID)</b>
+<b class="nc">&nbsp;                allTransactionsInBounds.add(transaction);</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return allTransactionsInBounds;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionsByDateTime(int userID, IDateTime lower, IDateTime upper) {
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; allTransactionsInBounds = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for(Transaction transaction : this.transactionList) {</b>
+&nbsp;
+<b class="nc">&nbsp;            int lowerBound = transaction.getDateTime().compare(lower);</b>
+<b class="nc">&nbsp;            int upperBound = transaction.getDateTime().compare(upper);</b>
+&nbsp;
+<b class="nc">&nbsp;            if( 0 &lt;= lowerBound &amp;&amp; upperBound &lt;= 0 &amp;&amp; transaction.getUserID() == userID) {</b>
+&nbsp;
+<b class="nc">&nbsp;                allTransactionsInBounds.add(transaction);</b>
+&nbsp;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return allTransactionsInBounds;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public int generateUniqueID()
+&nbsp;    {
+<b class="nc">&nbsp;        return currentID++;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionsByCategoryID(int categoryID) {
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; allTransactionsWithID = new ArrayList&lt;Transaction&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for(Transaction t : this.transactionList){</b>
+<b class="nc">&nbsp;            if(t.getCategoryID() == categoryID){</b>
+<b class="nc">&nbsp;                allTransactionsWithID.add(t);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return allTransactionsWithID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getNewestTransactionsForUser(int userID)
+&nbsp;    {
+<b class="nc">&nbsp;        Collections.sort(transactionList, new DateNewestFirstComparator());</b>
+<b class="nc">&nbsp;        return transactionList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getOldestTransactionsForUser(int userID)
+&nbsp;    {
+<b class="nc">&nbsp;        Collections.sort(transactionList, new DateOldestFirstComparator());</b>
+<b class="nc">&nbsp;        return transactionList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void printTransactionTable() {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;//    public static void cleanup() { currentID = 1; }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

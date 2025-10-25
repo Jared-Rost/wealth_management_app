@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LoginActivity</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation</a>
+</div>
+
+<h1>Coverage Summary for Class: LoginActivity (com.spenditure.presentation)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LoginActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/21)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.presentation;
+&nbsp;
+&nbsp;import androidx.appcompat.app.AppCompatActivity;
+&nbsp;
+&nbsp;import android.content.Intent;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.view.View;
+&nbsp;import android.widget.Button;
+&nbsp;import android.widget.EditText;
+&nbsp;import android.widget.Toast;
+&nbsp;
+&nbsp;import com.example.spenditure.R;
+&nbsp;import com.spenditure.logic.UserHandler;
+&nbsp;import com.spenditure.logic.exceptions.InvalidUserInformationException;
+&nbsp;import com.spenditure.presentation.report.ViewReportActivity;
+&nbsp;
+<b class="nc">&nbsp;public class LoginActivity extends AppCompatActivity {</b>
+&nbsp;
+&nbsp;    private String username;
+&nbsp;    private String password;
+&nbsp;    private UserManager userManager;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc">&nbsp;        userManager = new UserManager(true);</b>
+<b class="nc">&nbsp;        setContentView(R.layout.activity_login);</b>
+&nbsp;
+<b class="nc">&nbsp;        setUpLoginButton();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setUpLoginButton() {
+<b class="nc">&nbsp;        Button button = (Button) findViewById(R.id.button_login);</b>
+<b class="nc">&nbsp;        button.setOnClickListener(new View.OnClickListener() {</b>
+&nbsp;            public void onClick(View v) {
+<b class="nc">&nbsp;                EditText user = (EditText) findViewById(R.id.edittext_username);</b>
+<b class="nc">&nbsp;                username = user.getText().toString();</b>
+&nbsp;
+<b class="nc">&nbsp;                EditText pass = (EditText) findViewById(R.id.edittext_current_password);</b>
+<b class="nc">&nbsp;                password = pass.getText().toString();</b>
+&nbsp;
+&nbsp;                try {
+<b class="nc">&nbsp;                    int userID = userManager.login(username, password);</b>
+&nbsp;
+<b class="nc">&nbsp;                    if (userID != 0){</b>
+&nbsp;                        // Login
+<b class="nc">&nbsp;                        Intent newIntent = new Intent(getApplicationContext(), ViewReportActivity.class);</b>
+<b class="nc">&nbsp;                        startActivity(newIntent);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                } catch (InvalidUserInformationException e){</b>
+<b class="nc">&nbsp;                    Toast.makeText(LoginActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();</b>
+<b class="nc">&nbsp;                    user.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;                    pass.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

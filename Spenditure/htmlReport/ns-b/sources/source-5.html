@@ -1,0 +1,312 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ViewTransactionsActivity</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation.transaction</a>
+</div>
+
+<h1>Coverage Summary for Class: ViewTransactionsActivity (com.spenditure.presentation.transaction)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ViewTransactionsActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/47)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ViewTransactionsActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ViewTransactionsActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/53)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * ViewTransactionsActivity.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Jillian Friesen, 7889402
+&nbsp; * @date Tuesday, February 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file contains all the event handlers and UI management for the View Transactions
+&nbsp; *  activity where users can view a list of all their transactions. The UI allows users
+&nbsp; *  to sort these transaction by date and to edit/delete transactions.
+&nbsp; **/
+&nbsp;
+&nbsp;package com.spenditure.presentation.transaction;
+&nbsp;
+&nbsp;import androidx.appcompat.app.AppCompatActivity;
+&nbsp;import androidx.appcompat.widget.AppCompatToggleButton;
+&nbsp;
+&nbsp;import android.content.Intent;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.view.View;
+&nbsp;import android.widget.AdapterView;
+&nbsp;import android.widget.Button;
+&nbsp;import android.widget.ListView;
+&nbsp;
+&nbsp;import com.example.spenditure.R;
+&nbsp;import com.google.android.material.bottomnavigation.BottomNavigationView;
+&nbsp;import com.spenditure.logic.TransactionHandler;
+&nbsp;import com.spenditure.logic.UserHandler;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;import com.spenditure.presentation.BottomNavigationHandler;
+&nbsp;import com.spenditure.presentation.category.ViewCategoryActivity;
+&nbsp;import com.spenditure.presentation.report.ViewReportActivity;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="nc">&nbsp;public class ViewTransactionsActivity extends AppCompatActivity {</b>
+&nbsp;
+&nbsp;    // Instance Variables
+<b class="nc">&nbsp;    private static TransactionHandler transactionHandler = null;</b>
+&nbsp;    private List&lt;Transaction&gt; transactions;
+&nbsp;    private int currentIdSelected;
+&nbsp;    private CustomTransactionAdapter adaptor;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc">&nbsp;        setContentView(R.layout.activity_view_transactions);</b>
+&nbsp;
+&nbsp;        // Get all the transactions from the handler
+<b class="nc">&nbsp;        if( transactionHandler == null){</b>
+<b class="nc">&nbsp;            transactionHandler = new TransactionHandler(true);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        transactions = transactionHandler.getAllByNewestFirst(UserManager.getUserID());</b>
+&nbsp;
+<b class="nc">&nbsp;        ListView transactionsListView = (ListView)findViewById(R.id.listview_transactions);</b>
+&nbsp;
+&nbsp;        // Create an adaptor to format transactions in the list view
+<b class="nc">&nbsp;        adaptor = new CustomTransactionAdapter(transactions, this);</b>
+<b class="nc">&nbsp;        transactionsListView.setAdapter(adaptor);</b>
+&nbsp;
+&nbsp;        // Trigger when list item is selected
+<b class="nc">&nbsp;        transactionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+&nbsp;                // Enable the edit and delete buttons
+<b class="nc">&nbsp;                changeButtonEnabled(true);</b>
+&nbsp;
+<b class="nc">&nbsp;                currentIdSelected = (int) id;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // Trigger when sorting mode is changed
+<b class="nc">&nbsp;        AppCompatToggleButton sortingMode = (AppCompatToggleButton) findViewById(R.id.togglebutton_transaction_date_sort);</b>
+<b class="nc">&nbsp;        sortingMode.setOnClickListener(new View.OnClickListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void onClick(View view) {
+&nbsp;                // True: newest first, False: oldest first
+<b class="nc">&nbsp;                boolean newestFirst = sortingMode.isChecked();</b>
+<b class="nc">&nbsp;                changeSortingMode(newestFirst);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        navBarHandling();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Handle the bottom navigation bar
+&nbsp;    private void navBarHandling(){
+<b class="nc">&nbsp;        BottomNavigationView navView = findViewById(R.id.nav_view);</b>
+&nbsp;
+<b class="nc">&nbsp;        BottomNavigationHandler navigationHandler = new BottomNavigationHandler();</b>
+&nbsp;
+<b class="nc">&nbsp;        navView.setOnItemSelectedListener((item -&gt; {</b>
+<b class="nc">&nbsp;            if (item.getItemId() == R.id.navigation_view_transactions){</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            Class&lt;? extends AppCompatActivity&gt; newActivity = navigationHandler.select(item.getItemId());</b>
+<b class="nc">&nbsp;            if(newActivity != null){</b>
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), newActivity));</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }));
+&nbsp;
+&nbsp;        // Set the selected item if needed
+<b class="nc">&nbsp;        navView.setSelectedItemId(R.id.navigation_view_transactions);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Change the sorting mode for the transactions
+&nbsp;    private void changeSortingMode(boolean newestFirst){
+&nbsp;        ArrayList&lt;Transaction&gt; updatedList;
+&nbsp;
+<b class="nc">&nbsp;        if (newestFirst){</b>
+&nbsp;            // Newest transactions first
+<b class="nc">&nbsp;            updatedList = transactionHandler.getAllByNewestFirst(UserManager.getUserID());</b>
+&nbsp;        } else {
+&nbsp;            // Oldest transactions first
+<b class="nc">&nbsp;            updatedList = transactionHandler.getAllByOldestFirst(UserManager.getUserID());</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Update the list view with the new order
+<b class="nc">&nbsp;        transactions = updatedList;</b>
+<b class="nc">&nbsp;        adaptor.notifyDataSetChanged();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Change the state of the edit and delete button
+&nbsp;    private void changeButtonEnabled(boolean enabled){
+<b class="nc">&nbsp;        Button editButton = (Button) findViewById(R.id.button_edit);</b>
+<b class="nc">&nbsp;        Button deleteButton = (Button) findViewById(R.id.button_delete);</b>
+<b class="nc">&nbsp;        editButton.setEnabled(enabled);</b>
+<b class="nc">&nbsp;        deleteButton.setEnabled(enabled);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Pass the selected transaction to the Edit Transaction Activity
+&nbsp;    public void editTransactionClicked(View view){
+&nbsp;        // Pass the ID of the selected transaction to be edited
+<b class="nc">&nbsp;        Intent newIntent = new Intent(getApplicationContext(), EditTransactionActivity.class);</b>
+<b class="nc">&nbsp;        newIntent.putExtra(&quot;selectedTransaction&quot;, currentIdSelected);</b>
+<b class="nc">&nbsp;        newIntent.putExtra(&quot;transaction_handler&quot;,transactionHandler);</b>
+<b class="nc">&nbsp;        startActivity(newIntent);</b>
+&nbsp;
+<b class="nc">&nbsp;        changeButtonEnabled(false);</b>
+<b class="nc">&nbsp;        currentIdSelected = -1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Delete the selected transaction
+&nbsp;    public void deleteTransactionClicked(View view){
+&nbsp;        // Deselect any items
+<b class="nc">&nbsp;        ListView transactionsListView = (ListView)findViewById(R.id.listview_transactions);</b>
+<b class="nc">&nbsp;        transactionsListView.clearChoices();</b>
+&nbsp;
+&nbsp;        // Get and delete the chosen transaction
+<b class="nc">&nbsp;        Transaction toDelete = transactionHandler.getTransactionByID(currentIdSelected);</b>
+<b class="nc">&nbsp;        transactionHandler.deleteTransaction(toDelete);</b>
+&nbsp;
+&nbsp;        // Refresh the list view
+<b class="nc">&nbsp;        adaptor.notifyDataSetChanged();</b>
+&nbsp;
+<b class="nc">&nbsp;        changeButtonEnabled(false);</b>
+<b class="nc">&nbsp;        currentIdSelected = -1;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

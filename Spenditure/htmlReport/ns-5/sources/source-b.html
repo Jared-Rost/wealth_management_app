@@ -1,0 +1,114 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ITransactionHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.logic</a>
+</div>
+
+<h1>Coverage Summary for Class: ITransactionHandler (com.spenditure.logic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ITransactionHandler</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * ITransactionHandler.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Toran Pillay, 7842389
+&nbsp; * @date Tuesday, February 6, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  Interface file for the Transaction Handler.
+&nbsp; **/
+&nbsp;
+&nbsp;package com.spenditure.logic;
+&nbsp;
+&nbsp;import com.spenditure.object.DateTime;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;
+&nbsp;public interface ITransactionHandler {
+&nbsp;    boolean addTransaction(Transaction t);
+&nbsp;
+&nbsp;    boolean modifyTransaction(Transaction t);
+&nbsp;
+&nbsp;    boolean deleteTransaction(Transaction t);
+&nbsp;
+&nbsp;    Transaction getTransactionByID(int id);
+&nbsp;
+&nbsp;    List&lt;Transaction&gt; getAllTransactions(int userID);
+&nbsp;
+&nbsp;    ArrayList&lt;Transaction&gt; getAllByNewestFirst(int userID);
+&nbsp;
+&nbsp;    ArrayList&lt;Transaction&gt; getAllByOldestFirst(int userID);
+&nbsp;
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionByCategoryID(int categoryID);
+&nbsp;
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionByName(int userID, String name);
+&nbsp;
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionByPlace(int userID, String place);
+&nbsp;
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionByAmountBetween(int userID, double lower, double upper);
+&nbsp;
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionByDateTime(int userID, DateTime lower, DateTime upper);
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

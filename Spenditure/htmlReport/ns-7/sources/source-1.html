@@ -1,0 +1,152 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CategoryReport</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.object</a>
+</div>
+
+<h1>Coverage Summary for Class: CategoryReport (com.spenditure.object)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CategoryReport</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.object;
+&nbsp;
+&nbsp;public class CategoryReport implements ICategoryReport{
+&nbsp;
+&nbsp;    MainCategory category;
+&nbsp;
+&nbsp;    double totalSpending;
+&nbsp;
+&nbsp;    int numTransactions;
+&nbsp;
+&nbsp;    double averageTransaction;
+&nbsp;
+&nbsp;    double percentage;
+&nbsp;
+&nbsp;
+&nbsp;    public CategoryReport(MainCategory category, double totalSpending, int numTransactions, double averageTransaction, double percentage)
+<b class="nc">&nbsp;    {</b>
+<b class="nc">&nbsp;        this.category = category;</b>
+<b class="nc">&nbsp;        this.totalSpending = totalSpending;</b>
+<b class="nc">&nbsp;        this.numTransactions = numTransactions;</b>
+<b class="nc">&nbsp;        this.averageTransaction = averageTransaction;</b>
+<b class="nc">&nbsp;        this.percentage = percentage;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public IMainCategory getCategory()
+&nbsp;    {
+<b class="nc">&nbsp;        return category;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getTotalSpending()
+&nbsp;    {
+<b class="nc">&nbsp;        return totalSpending;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNumTransactions()
+&nbsp;    {
+<b class="nc">&nbsp;        return numTransactions;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getAverageTransactions()
+&nbsp;    {
+<b class="nc">&nbsp;        return averageTransaction;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getPercentage()
+&nbsp;    {
+<b class="nc">&nbsp;        return percentage;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

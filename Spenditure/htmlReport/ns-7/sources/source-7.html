@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Report</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.object</a>
+</div>
+
+<h1>Coverage Summary for Class: Report (com.spenditure.object)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Report</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.object;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class Report implements IReport{
+&nbsp;
+&nbsp;    private double avgTransSize;
+&nbsp;
+&nbsp;    private int numTrans;
+&nbsp;
+&nbsp;    private double stdDev;
+&nbsp;
+&nbsp;
+&nbsp;    private ArrayList&lt;CategoryStatistics&gt; categoryStatisticsList;
+&nbsp;
+&nbsp;    public Report(double avgTransSize, int numTrans, double stdDev, ArrayList&lt;CategoryStatistics&gt; categoryStatisticsList)
+<b class="nc">&nbsp;    {</b>
+<b class="nc">&nbsp;        this.avgTransSize = avgTransSize;</b>
+<b class="nc">&nbsp;        this.numTrans = numTrans;</b>
+<b class="nc">&nbsp;        this.stdDev = stdDev;</b>
+<b class="nc">&nbsp;        this.categoryStatisticsList = categoryStatisticsList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getAvgTransSize()
+&nbsp;    {
+<b class="nc">&nbsp;        return avgTransSize;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNumTrans()
+&nbsp;    {
+<b class="nc">&nbsp;        return numTrans;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getStdDev()
+&nbsp;    {
+<b class="nc">&nbsp;        return stdDev;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;CategoryStatistics&gt; getCategoryStatisticsList()
+&nbsp;    {
+<b class="nc">&nbsp;        return categoryStatisticsList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getTotal(){
+<b class="nc">&nbsp;        double total = 0;</b>
+<b class="nc">&nbsp;        for(CategoryStatistics categoryStatistics: this.categoryStatisticsList){</b>
+<b class="nc">&nbsp;            total += categoryStatistics.getTotal();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return total;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getPercentage(){
+<b class="nc">&nbsp;        double perCentage = 0;</b>
+<b class="nc">&nbsp;        for(CategoryStatistics categoryStatistics: this.categoryStatisticsList){</b>
+<b class="nc">&nbsp;            perCentage += categoryStatistics.getPercent();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return perCentage;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

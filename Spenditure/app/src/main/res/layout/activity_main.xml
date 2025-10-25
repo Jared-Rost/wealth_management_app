@@ -1,0 +1,991 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.spenditure.presentation.report.ViewReportActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/background_color">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_title_bar_height">
+
+
+            <ImageView
+                android:id="@+id/imageView_holder_report"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:src="@drawable/background_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spenditure"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView_holder_report"
+                app:layout_constraintEnd_toEndOf="@+id/imageView_holder_report"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="@+id/imageView_holder_report"
+                app:layout_constraintTop_toTopOf="@+id/imageView_holder_report"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView_holder_report"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imageView_holder_report">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Report"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/normal_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="50dp">
+
+                    <ImageView
+                        android:id="@+id/imageview_summary_report"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/background_light_blue" />
+
+                    <ImageView
+
+
+                        android:id="@+id/imageView4"
+
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_summary_report"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.01"
+                        app:layout_constraintStart_toStartOf="@+id/imageview_summary_report"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_summary_report"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/symbol_barplot" />
+
+                    <ImageView
+
+
+                        android:layout_width="150dp"
+
+                        android:layout_height="150dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:alpha="0.1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_summary_report"
+                        app:srcCompat="@drawable/symbol_banking" />
+
+                    <ImageView
+
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_summary_report"
+                        app:layout_constraintEnd_toStartOf="@+id/textview_general_total_spending"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_summary_report"
+                        app:layout_constraintVertical_bias="0.309"
+                        app:srcCompat="@drawable/symbol_check" />
+
+                    <ImageView
+
+                        android:id="@+id/imageView_report_summary_check"
+                        android:layout_width="40dp"
+
+                        android:layout_height="40dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_summary_report"
+                        app:layout_constraintEnd_toStartOf="@+id/textview_summary_num_trans"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_summary_report"
+                        app:layout_constraintVertical_bias="0.681"
+                        app:srcCompat="@drawable/symbol_check" />
+
+                    <TextView
+                        android:id="@+id/textview_general_total_spending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="You've spent 15 000 CAD"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/normal_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_summary_report"
+                        app:layout_constraintEnd_toEndOf="@+id/imageview_summary_report"
+                        app:layout_constraintHorizontal_bias="0.501"
+                        app:layout_constraintStart_toStartOf="@+id/imageview_summary_report"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_summary_report"
+                        app:layout_constraintVertical_bias="0.311" />
+
+                    <TextView
+                        android:id="@+id/textview_summary_num_trans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="You've made 500 transactions"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/normal_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_summary_report"
+                        app:layout_constraintEnd_toEndOf="@+id/imageview_summary_report"
+                        app:layout_constraintStart_toStartOf="@+id/imageview_summary_report"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_summary_report"
+                        app:layout_constraintVertical_bias="0.68" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="50dp">
+
+                    <ImageView
+                        android:id="@+id/imageview_customize_report"
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/background_light_blue" />
+
+                    <ImageView
+
+
+                        android:layout_width="70dp"
+
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_customize_report"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.01"
+                        app:layout_constraintStart_toStartOf="@+id/imageview_customize_report"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_customize_report"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/symbol_barplot" />
+
+                    <Spinner
+                        android:id="@+id/spinner_report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:pointerIcon="grabbing"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_customize_report"
+                        app:layout_constraintEnd_toEndOf="@+id/imageview_customize_report"
+
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/imageview_customize_report"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_customize_report"
+                        app:layout_constraintVertical_bias="0.045" />
+
+                    <TextView
+                        android:id="@+id/textview_custom_report_most"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Mostly spending on Food"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/normal_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_customize_report"
+                        app:layout_constraintEnd_toEndOf="@+id/imageview_customize_report"
+                        app:layout_constraintStart_toStartOf="@+id/imageview_customize_report"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_customize_report"
+                        app:layout_constraintVertical_bias="0.37" />
+
+
+                    <TextView
+                        android:id="@+id/textview_custom_report_least"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Least spending on Grocery"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/normal_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_customize_report"
+                        app:layout_constraintEnd_toEndOf="@+id/imageview_customize_report"
+                        app:layout_constraintHorizontal_bias="0.501"
+                        app:layout_constraintStart_toStartOf="@+id/imageview_customize_report"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_customize_report"
+                        app:layout_constraintVertical_bias="0.679" />
+
+                    <ImageView
+
+                        android:id="@+id/imageView"
+                        android:layout_width="40dp"
+
+                        android:layout_height="40dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_customize_report"
+                        app:layout_constraintEnd_toStartOf="@+id/textview_custom_report_most"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_customize_report"
+                        app:layout_constraintVertical_bias="0.375"
+                        app:srcCompat="@drawable/symbol_check" />
+
+                    <ImageView
+
+                        android:id="@+id/imageView_report_summary_check_custom"
+                        android:layout_width="40dp"
+
+                        android:layout_height="40dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageview_customize_report"
+                        app:layout_constraintEnd_toStartOf="@+id/textview_custom_report_least"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_customize_report"
+                        app:layout_constraintVertical_bias="0.687"
+                        app:srcCompat="@drawable/symbol_check" />
+
+                    <ImageView
+
+                        android:id="@+id/imageView_check_custom"
+                        android:layout_width="200dp"
+
+                        android:layout_height="200dp"
+                        android:alpha="0.1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.028"
+                        app:layout_constraintStart_toStartOf="@+id/imageview_customize_report"
+                        app:layout_constraintTop_toTopOf="@+id/imageview_customize_report"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/symbol_holding_dollar" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="900dp"
+                    android:layout_marginHorizontal="50dp"
+                    android:gravity="center"
+
+                    android:id="@+id/report_cat_chart"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_dark_blue"
+                    android:padding="@dimen/space_2"
+
+
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:layout_marginHorizontal="0dp">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="400dp"
+
+                            android:id="@+id/report_no_category_report"
+                            android:orientation="vertical"
+                            android:background="@drawable/background_dark_blue"
+                            android:visibility="invisible">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/space_6"
+                                android:paddingHorizontal="@dimen/space_2"
+                                android:text="Group transaction by Category to see this report"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/normal_size"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/viewpager_report"
+                            android:layout_width="match_parent"
+                            android:layout_height="400dp"
+                            android:layout_marginHorizontal="0dp"
+                            />
+                    </RelativeLayout>
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/piechart_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Last year"
+                    android:textAlignment="center"
+                    android:paddingHorizontal="@dimen/space_2"
+                    android:layout_marginHorizontal="@dimen/space_6"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/normal_size"
+                    android:textStyle="bold"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginHorizontal="50dp"
+                    android:id="@+id/report_last_year"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_dark_blue"
+                    >
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:rowCount="2"
+                        android:columnCount="2"
+                        >
+
+                        <!-- First quarter -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_rowWeight="1"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/symbol_doc" />
+
+                            <TextView
+                                android:id="@+id/textview_lastYear_transactionsCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="20 transactions"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/normal_size"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <!-- Second quarter -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_rowWeight="1"
+                            android:layout_columnWeight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/symbol_addchart"
+                                android:layout_gravity="center"/>
+
+                            <TextView
+                                android:id="@+id/textview_lastYear_total"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$1000 CAD"
+                                android:textSize="@dimen/normal_size"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"/>
+
+                        </LinearLayout>
+
+                        <!-- Third quarter -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_rowWeight="1"
+                            android:layout_columnWeight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/symbol_calculate"
+                                android:layout_gravity="center"/>
+
+                            <TextView
+                                android:id="@+id/textview_lastYear_average"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="100 CAD"
+                                android:textSize="@dimen/normal_size"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"/>
+
+
+                        </LinearLayout>
+
+                        <!-- Fourth quarter -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_rowWeight="1"
+                            android:layout_columnWeight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/symbol_pie_chart"
+                                android:layout_gravity="center"/>
+
+                            <TextView
+                                android:id="@+id/textview_lastYear_percentage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="20 %"
+                                android:textSize="@dimen/normal_size"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"/>
+
+                        </LinearLayout>
+
+
+
+                    </GridLayout>
+
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1000dp"
+                    android:layout_marginHorizontal="50dp"
+                    android:background="@drawable/background_dark_blue"
+                    android:orientation="vertical"
+                    android:id="@+id/linearLayout_custom_report">
+
+                    <Spinner
+                        android:layout_marginStart="@dimen/radius_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:pointerIcon="grabbing"
+                        android:id="@+id/spinner_timebase_report"
+                       />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:paddingHorizontal="@dimen/space_2">
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/shimmer_timebase_report"
+
+                           >
+
+                            <GridLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:rowCount="2"
+                                android:columnCount="2"
+                                android:background="@drawable/background_grey"
+                                >
+
+                                <!-- First quarter -->
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_rowWeight="1"
+                                    android:layout_columnWeight="1"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/symbol_doc" />
+
+                                    <TextView
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="20 transactions"
+                                        android:textSize="@dimen/normal_size"
+                                        android:textColor="@color/grey_silver"
+                                        android:textStyle="bold"/>
+
+                                </LinearLayout>
+
+                                <!-- Second quarter -->
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_rowWeight="1"
+                                    android:layout_columnWeight="1"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <ImageView
+
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/symbol_addchart"
+                                        android:layout_gravity="center"/>
+
+                                    <TextView
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="$1000 CAD"
+                                        android:textSize="@dimen/normal_size"
+                                        android:textColor="@color/grey_silver"
+                                        android:textStyle="bold"/>
+
+                                </LinearLayout>
+
+                                <!-- Third quarter -->
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_rowWeight="1"
+                                    android:layout_columnWeight="1"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <ImageView
+
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/symbol_calculate"
+                                        android:layout_gravity="center"/>
+
+                                    <TextView
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="100 CAD"
+                                        android:textSize="@dimen/normal_size"
+                                        android:textColor="@color/grey_silver"
+                                        android:textStyle="bold"/>
+
+
+                                </LinearLayout>
+
+                                <!-- Fourth quarter -->
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_rowWeight="1"
+                                    android:layout_columnWeight="1"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <ImageView
+
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/symbol_pie_chart"
+                                        android:layout_gravity="center"/>
+
+                                    <TextView
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="20 %"
+                                        android:textSize="@dimen/normal_size"
+                                        android:textColor="@color/grey_silver"
+                                        android:textStyle="bold"/>
+
+                                </LinearLayout>
+
+
+
+                            </GridLayout>
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/gridlayout_timebase_report"
+                            android:layout_width="match_parent"
+                            android:layout_height="400dp"
+                            android:layout_marginHorizontal="0dp" />
+
+
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="520dp"
+
+                        android:gravity="center"
+
+                        android:id="@+id/report_line_chart"
+                        android:orientation="vertical"
+                        android:background="@drawable/background_dark_blue"
+                        android:padding="@dimen/space_2"
+
+
+                        >
+
+
+                        <com.github.mikephil.charting.charts.LineChart
+
+                            android:id="@+id/lineChart_spending"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:orientation="vertical"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginHorizontal="30dp"
+                       >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="From"
+                                android:textSize="@dimen/small_size"
+                                android:textStyle="bold"
+                                android:layout_marginEnd="@dimen/space_1"
+                                android:textColor="@color/white"
+                                />
+                            <Button
+                                android:id="@+id/button_report_from"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="20/10/2023"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/small_size"
+                                android:textStyle="bold"
+
+                                />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_weight="1">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="To"
+                                android:textSize="@dimen/small_size"
+                                android:textStyle="bold"
+                                android:layout_marginEnd="@dimen/space_1"
+                                android:textColor="@color/white"
+                                />
+                            <Button
+                                android:id="@+id/button_report_to"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="20/10/2023"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/small_size"
+                                android:textStyle="bold"
+                                />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_weight="1">
+                            <Button
+                                android:id="@+id/button_get_report"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Get report"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/small_size"/>
+                        </LinearLayout>
+
+
+
+
+
+
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:layout_marginHorizontal="50dp"
+
+                        android:orientation="vertical"
+                        android:background="@drawable/background_dark_blue">
+                        <GridLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="400dp"
+                            android:rowCount="2"
+                            android:columnCount="2"
+
+                            >
+
+                            <!-- First quarter -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_rowWeight="1"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/symbol_doc" />
+
+                                <TextView
+                                    android:id="@+id/textview_customTime_totalTrans"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0 transactions"
+                                    android:textSize="@dimen/normal_size"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+                            <!-- Second quarter -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_rowWeight="1"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:src="@drawable/symbol_addchart"
+                                    android:layout_gravity="center"/>
+
+                                <TextView
+                                    android:id="@+id/textview_customTime_totalAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="$0 CAD"
+                                    android:textSize="@dimen/normal_size"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+                            <!-- Third quarter -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_rowWeight="1"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:src="@drawable/symbol_calculate"
+                                    android:layout_gravity="center"/>
+
+                                <TextView
+                                    android:id="@+id/textview_customTime_average"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="$0 CAD"
+                                    android:textSize="@dimen/normal_size"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"/>
+
+
+                            </LinearLayout>
+
+                            <!-- Fourth quarter -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_rowWeight="1"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:src="@drawable/symbol_pie_chart"
+                                    android:layout_gravity="center"/>
+
+                                <TextView
+                                    android:id="@+id/textview_customTime_percentage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0 %"
+                                    android:textSize="@dimen/normal_size"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+
+
+                        </GridLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+
+
+
+                <!-- This is a holder -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp" />
+
+            </LinearLayout>
+
+
+
+
+        </ScrollView>
+    </LinearLayout>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/nav_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

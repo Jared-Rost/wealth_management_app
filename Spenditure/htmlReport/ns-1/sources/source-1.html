@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Services</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.application</a>
+</div>
+
+<h1>Coverage Summary for Class: Services (com.spenditure.application)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Services</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (21/28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.application;
+&nbsp;
+&nbsp;import com.spenditure.database.CategoryPersistence;
+&nbsp;import com.spenditure.database.TransactionPersistence;
+&nbsp;import com.spenditure.database.UserPersistence;
+&nbsp;import com.spenditure.database.hsqldb.CategorySQL;
+&nbsp;import com.spenditure.database.hsqldb.TransactionSQL;
+&nbsp;import com.spenditure.database.hsqldb.UserSQL;
+&nbsp;import com.spenditure.database.stub.CategoryStub;
+&nbsp;import com.spenditure.database.stub.TransactionStub;
+&nbsp;import com.spenditure.database.stub.UserStub;
+&nbsp;import com.spenditure.presentation.report.ViewReportActivity;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Service
+&nbsp; * @author Bao Ngo
+&nbsp; * @version 06 Feb 2024
+&nbsp; * PURPOSE: provide database services for application
+&nbsp; */
+&nbsp;
+<b class="nc">&nbsp;public class Services {</b>
+<b class="fc">&nbsp;    private static CategoryPersistence categoryPersistence = null;</b>
+<b class="fc">&nbsp;    private static TransactionPersistence transactionPersistence = null;</b>
+<b class="fc">&nbsp;    private static UserPersistence userPersistence = null;</b>
+&nbsp;
+&nbsp;    public static synchronized CategoryPersistence getCategoryPersistence(boolean inDeveloping){
+<b class="fc">&nbsp;        if(categoryPersistence == null) {</b>
+<b class="fc">&nbsp;            if(inDeveloping){</b>
+<b class="nc">&nbsp;                categoryPersistence = new CategoryStub();</b>
+&nbsp;            }else {
+&nbsp;                //Handle connect to DB
+<b class="fc">&nbsp;                categoryPersistence = new CategorySQL(ViewReportActivity.getDBPathName());</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return categoryPersistence;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static synchronized TransactionPersistence getTransactionPersistence(boolean inDeveloping){
+<b class="fc">&nbsp;        if(transactionPersistence == null) {</b>
+<b class="fc">&nbsp;            if(inDeveloping){</b>
+<b class="nc">&nbsp;                transactionPersistence = new TransactionStub();</b>
+&nbsp;            }else{
+&nbsp;                //Handle connect to DB
+<b class="fc">&nbsp;                transactionPersistence = new TransactionSQL(ViewReportActivity.getDBPathName());</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return transactionPersistence;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static synchronized UserPersistence getUserPersistence(boolean inDeveloping){
+<b class="fc">&nbsp;        if(userPersistence == null) {</b>
+<b class="fc">&nbsp;            if(inDeveloping){</b>
+<b class="nc">&nbsp;                userPersistence = new UserStub();</b>
+&nbsp;            }else{
+&nbsp;                //Handle connect to DB
+<b class="fc">&nbsp;                userPersistence = new UserSQL(ViewReportActivity.getDBPathName());</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return userPersistence;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // This method is for the shake of testing with stub database
+&nbsp;    public static void restartCategoryDB(boolean getStubDB){
+<b class="fc">&nbsp;        if(getStubDB){</b>
+<b class="nc">&nbsp;            categoryPersistence = new CategoryStub();</b>
+&nbsp;        }else{
+&nbsp;            //Handle re-connect to DB
+<b class="fc">&nbsp;            categoryPersistence = new CategorySQL(ViewReportActivity.getDBPathName());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // This method is for the shake of testing with stub database
+&nbsp;    public static void restartTransactionDB(boolean getStubDB){
+<b class="fc">&nbsp;        if(getStubDB){</b>
+<b class="nc">&nbsp;            transactionPersistence = new TransactionStub();</b>
+&nbsp;        }else{
+&nbsp;            //Hanlde re-connect to DB
+<b class="fc">&nbsp;            transactionPersistence = new TransactionSQL(ViewReportActivity.getDBPathName());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // This method is for the shake of testing with stub database
+&nbsp;    public static void restartAccountDB(boolean getStubDB){
+<b class="fc">&nbsp;        if(getStubDB){</b>
+<b class="nc">&nbsp;            userPersistence = new UserStub();</b>
+&nbsp;        }else{
+&nbsp;            //Hanlde re-connect to DB
+<b class="fc">&nbsp;            userPersistence = new UserSQL(ViewReportActivity.getDBPathName());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

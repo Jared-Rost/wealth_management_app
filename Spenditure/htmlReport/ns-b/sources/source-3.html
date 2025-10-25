@@ -1,0 +1,261 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > EditTransactionActivity</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation.transaction</a>
+</div>
+
+<h1>Coverage Summary for Class: EditTransactionActivity (com.spenditure.presentation.transaction)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EditTransactionActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/46)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">EditTransactionActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/51)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * EditTransactionActivity.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Jillian Friesen, 7889402
+&nbsp; * @date Tuesday, February 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file contains all the event handlers and UI management for the Edit Transaction
+&nbsp; *  activity where users can modify and save an existing transaction.
+&nbsp; **/
+&nbsp;
+&nbsp;package com.spenditure.presentation.transaction;
+&nbsp;
+&nbsp;import androidx.appcompat.app.AppCompatActivity;
+&nbsp;import androidx.appcompat.widget.AppCompatToggleButton;
+&nbsp;
+&nbsp;import android.content.Intent;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.view.View;
+&nbsp;import android.widget.Button;
+&nbsp;import android.widget.EditText;
+&nbsp;
+&nbsp;import com.example.spenditure.R;
+&nbsp;import com.google.android.material.bottomnavigation.BottomNavigationView;
+&nbsp;import com.spenditure.logic.TransactionHandler;
+&nbsp;import com.spenditure.logic.UserHandler;
+&nbsp;import com.spenditure.object.DateTime;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;import com.spenditure.presentation.report.ViewReportActivity;
+&nbsp;
+<b class="nc">&nbsp;public class EditTransactionActivity extends AppCompatActivity {</b>
+&nbsp;
+&nbsp;    // Instance Variables
+&nbsp;    private Transaction givenTransaction;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc">&nbsp;        setContentView(R.layout.activity_edit_transaction);</b>
+&nbsp;
+<b class="nc">&nbsp;        int givenID = -1;</b>
+&nbsp;
+&nbsp;        // Get the passed transaction ID
+<b class="nc">&nbsp;        Bundle extras = getIntent().getExtras();</b>
+<b class="nc">&nbsp;        if (extras != null) {</b>
+<b class="nc">&nbsp;            givenID = extras.getInt(&quot;selectedTransaction&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Get the transaction
+<b class="nc">&nbsp;        TransactionHandler handler = new TransactionHandler(true);</b>
+<b class="nc">&nbsp;        givenTransaction = handler.getTransactionByID(givenID);</b>
+&nbsp;
+&nbsp;        // Populate the UI fields
+<b class="nc">&nbsp;        populateTransactionFields(givenTransaction);</b>
+&nbsp;
+&nbsp;        // Set up click event for the Edit Transaction Button
+<b class="nc">&nbsp;        Button button = (Button) findViewById(R.id.button_edit_transaction);</b>
+<b class="nc">&nbsp;        button.setOnClickListener(new View.OnClickListener() {</b>
+&nbsp;            public void onClick(View v) {
+&nbsp;                // Call helper method
+<b class="nc">&nbsp;                Transaction updatedTransaction = editTransaction();</b>
+&nbsp;
+<b class="nc">&nbsp;                TransactionHandler handler = new TransactionHandler(true);</b>
+<b class="nc">&nbsp;                handler.modifyTransaction(updatedTransaction);</b>
+&nbsp;
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), ViewTransactionsActivity.class));</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        navBarHandling();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Handle the bottom navigation bar
+&nbsp;    private void navBarHandling(){
+<b class="nc">&nbsp;        BottomNavigationView navView = findViewById(R.id.nav_view);</b>
+<b class="nc">&nbsp;        navView.setSelectedItemId(R.id.navigation_home);</b>
+&nbsp;
+<b class="nc">&nbsp;        navView.setOnItemSelectedListener((item -&gt; {</b>
+<b class="nc">&nbsp;            if (item.getItemId() == R.id.navigation_home) {</b>
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), ViewReportActivity.class));</b>
+<b class="nc">&nbsp;                return true;</b>
+<b class="nc">&nbsp;            } else if (item.getItemId() == R.id.navigation_create_transaction) {</b>
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), CreateTransactionActivity.class));</b>
+<b class="nc">&nbsp;                return true;</b>
+<b class="nc">&nbsp;            } else if (item.getItemId() == R.id.navigation_view_transactions) {</b>
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), ViewTransactionsActivity.class));</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        }));
+&nbsp;    }
+&nbsp;
+&nbsp;    // Populate the fields on the UI using the given transaction
+&nbsp;    private void populateTransactionFields(Transaction transaction){
+<b class="nc">&nbsp;        EditText whatTheHeck = (EditText) findViewById(R.id.edittext_what_the_heck);</b>
+<b class="nc">&nbsp;        whatTheHeck.setText(transaction.getName());</b>
+&nbsp;
+<b class="nc">&nbsp;        DateTime date = new DateTime(2023,1,1,1,1,1); // Set default date for now</b>
+<b class="nc">&nbsp;        EditText dateTime = (EditText) findViewById(R.id.edittext_date);</b>
+&nbsp;
+<b class="nc">&nbsp;        EditText place = (EditText) findViewById(R.id.edittext_place);</b>
+<b class="nc">&nbsp;        place.setText(transaction.getPlace());</b>
+&nbsp;
+<b class="nc">&nbsp;        EditText amount = (EditText) findViewById(R.id.edittext_amount);</b>
+<b class="nc">&nbsp;        amount.setText(Double.toString(transaction.getAmount()));</b>
+&nbsp;
+<b class="nc">&nbsp;        EditText comments = (EditText) findViewById(R.id.edittext_comments);</b>
+<b class="nc">&nbsp;        comments.setText(transaction.getComments());</b>
+&nbsp;
+<b class="nc">&nbsp;        AppCompatToggleButton type = (AppCompatToggleButton) findViewById(R.id.togglebutton_type);</b>
+<b class="nc">&nbsp;        type.setChecked(transaction.getWithdrawal());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Helper method: return the updated Transaction object made from user-entered info
+&nbsp;    private Transaction editTransaction() {
+&nbsp;        // Parse all the user fields
+<b class="nc">&nbsp;        EditText whatTheHeck = (EditText) findViewById(R.id.edittext_what_the_heck);</b>
+<b class="nc">&nbsp;        DateTime date = new DateTime(2023,1,1,1,1,0); // Set default date for now</b>
+<b class="nc">&nbsp;        EditText place = (EditText) findViewById(R.id.edittext_place);</b>
+<b class="nc">&nbsp;        EditText amount = (EditText) findViewById(R.id.edittext_amount);</b>
+<b class="nc">&nbsp;        EditText comments = (EditText) findViewById(R.id.edittext_comments);</b>
+<b class="nc">&nbsp;        AppCompatToggleButton type = (AppCompatToggleButton) findViewById(R.id.togglebutton_type);</b>
+&nbsp;
+&nbsp;        // Create the new transaction object
+<b class="nc">&nbsp;        Transaction updatedTransaction = new Transaction(UserManager.getUserID(), givenTransaction.getTransactionID(), whatTheHeck.getText().toString(), date, place.getText().toString(), Double.parseDouble(amount.getText().toString()), comments.getText().toString(), type.isChecked(),null);</b>
+&nbsp;
+<b class="nc">&nbsp;        return updatedTransaction;</b>
+&nbsp;    };
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

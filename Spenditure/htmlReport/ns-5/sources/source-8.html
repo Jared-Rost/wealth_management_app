@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TransactionValidator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.logic</a>
+</div>
+
+<h1>Coverage Summary for Class: TransactionValidator (com.spenditure.logic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransactionValidator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96.2%
+  </span>
+  <span class="absValue">
+    (25/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * TransactionValidator.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Toran Pillay, 7842389
+&nbsp; * @date Tuesday, February 6, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file contains all of the methods necessary to validate the data in a
+&nbsp; * Transaction.
+&nbsp; **/
+&nbsp;
+&nbsp;package com.spenditure.logic;
+&nbsp;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;import com.spenditure.logic.exceptions.*;
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;public class TransactionValidator {</b>
+&nbsp;
+&nbsp;    //Max number of characters allowed in a comment
+&nbsp;    public static final int COMMENT_CHAR_LIMIT = 300;
+&nbsp;
+&nbsp;    /*
+&nbsp;        validateTransaction
+&nbsp;
+&nbsp;        returns true if all values for the transaction are valid
+&nbsp;     */
+&nbsp;    public static boolean validateTransaction(Transaction t) throws InvalidTransactionException {
+&nbsp;
+<b class="fc">&nbsp;        boolean valid = false;</b>
+&nbsp;
+<b class="fc">&nbsp;        if(t != null) {</b>
+<b class="fc">&nbsp;            boolean validName = validateName(t.getName());</b>
+<b class="fc">&nbsp;            boolean validDate = DateTimeValidator.validateDateTime(t.getDateTime());</b>
+<b class="fc">&nbsp;            boolean validPlace = validatePlace(t.getPlace());</b>
+<b class="fc">&nbsp;            boolean validAmount = validateAmount(t.getAmount());</b>
+<b class="fc">&nbsp;            boolean commentLimitCheck = checkComment(t.getComments());</b>
+&nbsp;            //Type is a boolean, so it can&#39;t be invalid
+&nbsp;
+<b class="fc">&nbsp;            valid = validName &amp;&amp; validDate &amp;&amp; validPlace &amp;&amp; validAmount &amp;&amp; commentLimitCheck;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return valid;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /*
+&nbsp;        validateName
+&nbsp;
+&nbsp;        ensures the name is not null and at least 1 character long
+&nbsp;     */
+&nbsp;    private static boolean validateName(String name) throws InvalidTransactionNameException {
+&nbsp;
+<b class="fc">&nbsp;        if( name == null || name.length() == 0 )</b>
+<b class="fc">&nbsp;            throw new InvalidTransactionNameException(&quot;Provided name was blank.&quot;);</b>
+&nbsp;        else
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /*
+&nbsp;        validatePlace
+&nbsp;
+&nbsp;        ensures the place is not null and at least 1 character long
+&nbsp;     */
+&nbsp;    private static boolean validatePlace(String place) throws InvalidTransactionPlaceException {
+&nbsp;
+<b class="fc">&nbsp;        if( place == null || place.length() == 0 )</b>
+<b class="fc">&nbsp;            throw new InvalidTransactionPlaceException(&quot;Provided place was blank.&quot;);</b>
+&nbsp;        else
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;//        return place != null &amp;&amp; place.length() &gt; 0;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /*
+&nbsp;        validateAmount
+&nbsp;
+&nbsp;        ensures the amount is at least 0 and fits the minimum increment value
+&nbsp;     */
+&nbsp;    private static boolean validateAmount(double amount) throws InvalidTransactionAmountException {
+&nbsp;
+<b class="fc">&nbsp;        if(amount &lt; 0)</b>
+<b class="fc">&nbsp;            throw new InvalidTransactionAmountException(&quot;Provided amount &quot;+amount+&quot; is a negative number.&quot;);</b>
+&nbsp;        else
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /*
+&nbsp;        checkComment
+&nbsp;
+&nbsp;        ensures the comment meets the character limit, if a comment
+&nbsp;        exists
+&nbsp;     */
+&nbsp;    private static boolean checkComment(String comment) throws InvalidTransactionCommentException {
+&nbsp;
+<b class="fc">&nbsp;        boolean withinLimit = true;</b>
+&nbsp;
+<b class="fc">&nbsp;        if( comment != null )</b>
+<b class="fc">&nbsp;            withinLimit = comment.length() &lt;= COMMENT_CHAR_LIMIT;</b>
+&nbsp;
+<b class="fc">&nbsp;        if( withinLimit )</b>
+<b class="fc">&nbsp;            return withinLimit;</b>
+&nbsp;
+&nbsp;        else {
+<b class="fc">&nbsp;            int overflow = comment.length() - COMMENT_CHAR_LIMIT;</b>
+<b class="fc">&nbsp;            throw new InvalidTransactionCommentException(&quot;Provided comment was &quot; + overflow + &quot; characters too long.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

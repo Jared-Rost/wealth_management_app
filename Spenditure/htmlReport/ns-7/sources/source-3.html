@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > DateNewestFirstComparator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.object</a>
+</div>
+
+<h1>Coverage Summary for Class: DateNewestFirstComparator (com.spenditure.object)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DateNewestFirstComparator</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * DateNewestFirstComparator.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Jared Rost,
+&nbsp; * @date Feb 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  Compare two DateTime objects and decide which is smaller with newer dates being smaller
+&nbsp; *
+&nbsp; **/
+&nbsp;
+&nbsp;
+&nbsp;package com.spenditure.object;
+&nbsp;
+&nbsp;import java.util.Comparator;
+&nbsp;
+&nbsp;// smallest first
+<b class="nc">&nbsp;public class DateNewestFirstComparator implements Comparator&lt;Transaction&gt; {</b>
+&nbsp;    @Override
+&nbsp;    public int compare(Transaction a, Transaction b) {
+&nbsp;        // compare years
+<b class="nc">&nbsp;        if(a.getDateTime().getYear() - b.getDateTime().getYear() != 0)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            return a.getDateTime().getYear() - b.getDateTime().getYear();</b>
+&nbsp;        }
+&nbsp;        // compare months
+<b class="nc">&nbsp;        else if(a.getDateTime().getMonth() - b.getDateTime().getMonth() != 0)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            return a.getDateTime().getMonth() - b.getDateTime().getMonth();</b>
+&nbsp;        }
+&nbsp;        // compare days
+<b class="nc">&nbsp;        else if(a.getDateTime().getDay() - b.getDateTime().getDay() != 0)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            return a.getDateTime().getDay() - b.getDateTime().getDay();</b>
+&nbsp;        }
+&nbsp;        // compare hours
+<b class="nc">&nbsp;        else if(a.getDateTime().getHour() - b.getDateTime().getHour() != 0)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            return a.getDateTime().getHour() - b.getDateTime().getHour();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if(a.getDateTime().getMinute() - b.getDateTime().getMinute() != 0)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            return a.getDateTime().getMinute() - b.getDateTime().getMinute();</b>
+&nbsp;        }
+&nbsp;        else
+&nbsp;        {
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

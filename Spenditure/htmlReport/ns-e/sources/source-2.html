@@ -1,0 +1,136 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > NotificationsViewModel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation.ui.notifications</a>
+</div>
+
+<h1>Coverage Summary for Class: NotificationsViewModel (com.spenditure.presentation.ui.notifications)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NotificationsViewModel</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * NotificationsViewModel.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Jillian Friesen, 7889402
+&nbsp; * @date Tuesday, February 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file contains formats the notifications
+&nbsp; **/
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;package com.spenditure.presentation.ui.notifications;
+&nbsp;
+&nbsp;import androidx.lifecycle.LiveData;
+&nbsp;import androidx.lifecycle.MutableLiveData;
+&nbsp;import androidx.lifecycle.ViewModel;
+&nbsp;
+&nbsp;public class NotificationsViewModel extends ViewModel {
+&nbsp;
+&nbsp;    private final MutableLiveData&lt;String&gt; mText;
+&nbsp;
+<b class="nc">&nbsp;    public NotificationsViewModel() {</b>
+<b class="nc">&nbsp;        mText = new MutableLiveData&lt;&gt;();</b>
+<b class="nc">&nbsp;        mText.setValue(&quot;This is notifications fragment&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public LiveData&lt;String&gt; getText() {
+<b class="nc">&nbsp;        return mText;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ITransaction</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.object</a>
+</div>
+
+<h1>Coverage Summary for Class: ITransaction (com.spenditure.object)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ITransaction</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * ITransaction.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Jared Rost,
+&nbsp; * @date Feb 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  Showcase what methods Transaction object should implement
+&nbsp; *
+&nbsp; **/
+&nbsp;
+&nbsp;package com.spenditure.object;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;public interface ITransaction {
+&nbsp;
+&nbsp;    //getters
+&nbsp;    int getTransactionID();
+&nbsp;
+&nbsp;    String getName();
+&nbsp;
+&nbsp;    DateTime getDateTime();
+&nbsp;
+&nbsp;    String getPlace();
+&nbsp;
+&nbsp;    double getAmount();
+&nbsp;
+&nbsp;    String getComments();
+&nbsp;
+&nbsp;    boolean getWithdrawal();
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    // setters
+&nbsp;    void setTransactionID(int transactionID);
+&nbsp;
+&nbsp;    void setName(String name);
+&nbsp;
+&nbsp;    void setDateTime(DateTime dateTime);
+&nbsp;
+&nbsp;    void setPlace(String place);
+&nbsp;
+&nbsp;    void setAmount(double amount);
+&nbsp;
+&nbsp;    void setComments(String comments);
+&nbsp;
+&nbsp;    void setWithdrawal(boolean withdrawal);
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

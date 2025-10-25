@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.spenditure.presentation.transaction.CreateTransactionActivity">
+
+    <LinearLayout
+        android:id="@+id/linearlayout_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/background_color">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_title_bar_height">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:src="@drawable/background_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/app_title"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/imageView2"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imageView2">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/title_create_transaction"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textSize="@dimen/small_size"/>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="100dp">
+
+            <ImageView
+                android:id="@+id/imageview_edit_credentials"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/background_light_blue" />
+
+            <TextView
+                android:id="@+id/textview_what_the_heck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_what_the_heck"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textview_date"
+                app:layout_constraintEnd_toStartOf="@+id/edittext_what_the_heck"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edittext_what_the_heck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="120dp"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/edittext_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_what_the_heck"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/textview_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_date"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textview_place"
+                app:layout_constraintEnd_toStartOf="@+id/edittext_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_what_the_heck" />
+
+            <EditText
+                android:id="@+id/edittext_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="120dp"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                app:layout_constraintBottom_toTopOf="@+id/textview_place"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_date"
+                app:layout_constraintTop_toBottomOf="@+id/edittext_what_the_heck"/>
+
+            <TextView
+                android:id="@+id/textview_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_place"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textview_amount"
+                app:layout_constraintEnd_toStartOf="@+id/edittext_place"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_date" />
+
+            <EditText
+                android:id="@+id/edittext_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="120dp"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/edittext_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_place"
+                app:layout_constraintTop_toBottomOf="@+id/edittext_date"/>
+
+            <TextView
+                android:id="@+id/textview_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_amount"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textview_type"
+                app:layout_constraintEnd_toStartOf="@+id/edittext_amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_place" />
+
+            <EditText
+                android:id="@+id/edittext_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="120dp"
+                android:inputType="numberDecimal"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/togglebutton_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_amount"
+                app:layout_constraintTop_toBottomOf="@+id/edittext_place"/>
+
+            <TextView
+                android:id="@+id/textview_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_type"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textview_categories"
+                app:layout_constraintEnd_toStartOf="@+id/togglebutton_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_amount" />
+
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:id="@+id/togglebutton_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deposit"
+                android:textSize="25dp"
+                android:textOn="Withdrawal"
+                android:textOff="Deposit"
+                android:checked="true"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/light_blue"
+                app:layout_constraintBottom_toTopOf="@+id/spinner_categories"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_type"
+                app:layout_constraintTop_toBottomOf="@+id/edittext_amount"/>
+
+            <TextView
+                android:id="@+id/textview_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_categories"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textview_image"
+                app:layout_constraintEnd_toStartOf="@+id/spinner_categories"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_type" />
+
+            <Spinner
+                android:id="@+id/spinner_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="200dp"
+                android:minHeight="30dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/light_blue"
+                app:layout_constraintBottom_toTopOf="@+id/button_take_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_categories"
+                app:layout_constraintTop_toBottomOf="@+id/togglebutton_type"/>
+
+            <TextView
+                android:id="@+id/textview_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_image"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textview_comments"
+                app:layout_constraintEnd_toStartOf="@+id/button_view_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_categories" />
+
+            <Button
+                android:id="@+id/button_view_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_view_image"
+                android:textSize="20dp"
+                android:backgroundTint="@color/light_blue"
+                android:enabled="false"
+                app:layout_constraintBottom_toTopOf="@+id/edittext_comments"
+                app:layout_constraintEnd_toStartOf="@+id/button_take_image"
+                app:layout_constraintStart_toEndOf="@+id/textview_image"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_categories"/>
+
+            <ImageButton
+                android:id="@+id/button_take_image"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:src="@drawable/symbol_camera"
+                android:backgroundTint="@color/light_blue"
+                app:layout_constraintBottom_toTopOf="@+id/edittext_comments"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_view_image"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_categories"/>
+
+            <TextView
+                android:id="@+id/textview_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_comments"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/button_create_transaction"
+                app:layout_constraintEnd_toStartOf="@+id/edittext_comments"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_image" />
+
+            <EditText
+                android:id="@+id/edittext_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="120dp"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/button_create_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_comments"
+                app:layout_constraintTop_toBottomOf="@+id/button_take_image"/>
+
+            <Button
+                android:id="@+id/button_create_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_create_transaction"
+                android:textSize="25dp"
+                android:backgroundTint="@color/light_blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_comments"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/nav_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

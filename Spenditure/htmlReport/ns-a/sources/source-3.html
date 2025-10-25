@@ -1,0 +1,560 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ViewReportActivity</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation.report</a>
+</div>
+
+<h1>Coverage Summary for Class: ViewReportActivity (com.spenditure.presentation.report)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ViewReportActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    21.4%
+  </span>
+  <span class="absValue">
+    (3/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.4%
+  </span>
+  <span class="absValue">
+    (5/92)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ViewReportActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ViewReportActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ViewReportActivity$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ViewReportActivity$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ViewReportActivity$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/25)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ViewReportActivity$6</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    10.3%
+  </span>
+  <span class="absValue">
+    (3/29)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.3%
+  </span>
+  <span class="absValue">
+    (5/151)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.presentation.report;
+&nbsp;
+&nbsp;import android.app.DatePickerDialog;
+&nbsp;import android.content.Intent;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.os.Handler;
+&nbsp;import android.view.View;
+&nbsp;import android.view.ViewGroup;
+&nbsp;import android.widget.AdapterView;
+&nbsp;import android.widget.ArrayAdapter;
+&nbsp;import android.widget.Button;
+&nbsp;import android.widget.DatePicker;
+&nbsp;import android.widget.Spinner;
+&nbsp;import android.widget.TextView;
+&nbsp;import android.widget.Toast;
+&nbsp;
+&nbsp;import com.example.spenditure.R;
+&nbsp;import com.facebook.shimmer.ShimmerFrameLayout;
+&nbsp;import com.google.android.material.bottomnavigation.BottomNavigationView;
+&nbsp;
+&nbsp;import androidx.appcompat.app.AppCompatActivity;
+&nbsp;import androidx.constraintlayout.widget.ConstraintLayout;
+&nbsp;import androidx.viewpager.widget.ViewPager;
+&nbsp;
+&nbsp;import com.spenditure.logic.CategoryHandler;
+&nbsp;import com.spenditure.logic.GeneralReportHandler;
+&nbsp;import com.spenditure.logic.ReportManager;
+&nbsp;import com.spenditure.logic.UserHandler;
+&nbsp;import com.spenditure.object.DateTime;
+&nbsp;import com.spenditure.object.IDateTime;
+&nbsp;import com.spenditure.object.IMainCategory;
+&nbsp;import com.spenditure.object.IReport;
+&nbsp;import com.spenditure.object.MainCategory;
+&nbsp;import com.spenditure.presentation.BottomNavigationHandler;
+&nbsp;import com.spenditure.presentation.UIUtility;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.time.LocalDate;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Report activity (Also main activity)
+&nbsp; * @author Bao Ngo
+&nbsp; * @version 04 Mar 2024
+&nbsp; */
+<b class="nc">&nbsp;public class ViewReportActivity extends AppCompatActivity {</b>
+&nbsp;
+<b class="fc">&nbsp;    private static String dbName=&quot;SC&quot;;</b>
+&nbsp;
+&nbsp;//    private ViewPager viewPagerCategory;
+&nbsp;//    private SliderAdapterCatGeneral adapter;
+&nbsp;    private ReportManager reportManager;
+&nbsp;    private GeneralReportHandler generalReportHandler;
+<b class="nc">&nbsp;    private final String[] custom_option = {&quot;Report by average&quot;,&quot;Report by total&quot;,&quot;Report by percentage&quot;}; //Drop down menu option</b>
+<b class="nc">&nbsp;    private final String[] time_base_option = {&quot;Report by year breaking into month&quot;,&quot;Report by month breaking into weeks&quot;};//Drop down menu option</b>
+&nbsp;    private CategoryHandler categoryHandler;
+&nbsp;//    private ViewPager viewPagerCustom;
+&nbsp;    private IDateTime fromDate;
+&nbsp;    private IDateTime toDate;
+<b class="nc">&nbsp;    private LocalDate currTime =  LocalDate.now();</b>
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc">&nbsp;        setContentView(R.layout.activity_main);</b>
+<b class="nc">&nbsp;        reportManager = new ReportManager(true);</b>
+<b class="nc">&nbsp;        categoryHandler = new CategoryHandler(true);</b>
+<b class="nc">&nbsp;        generalReportHandler = new GeneralReportHandler(true);</b>
+&nbsp;
+<b class="nc">&nbsp;        handleGeneralReport();</b>
+<b class="nc">&nbsp;        handleCustomCategoryReport();</b>
+<b class="nc">&nbsp;        handleCategoriesReport();</b>
+<b class="nc">&nbsp;        handleTimebaseReport();</b>
+<b class="nc">&nbsp;        handleCustomDateReport();</b>
+<b class="nc">&nbsp;        navBarHandling();</b>
+<b class="nc">&nbsp;        handleLastYearReport();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleLastYearReport(){
+<b class="nc">&nbsp;        IReport lastYearReport = reportManager.reportOnLastYear(UserManager.getUserID());</b>
+<b class="nc">&nbsp;        TextView numTransactions = findViewById(R.id.textview_lastYear_transactionsCount);</b>
+<b class="nc">&nbsp;        TextView totalTransactions = findViewById(R.id.textview_lastYear_total);</b>
+<b class="nc">&nbsp;        TextView average = findViewById(R.id.textview_lastYear_average);</b>
+<b class="nc">&nbsp;        TextView percentage = findViewById(R.id.textview_lastYear_percentage);</b>
+&nbsp;
+<b class="nc">&nbsp;        numTransactions.setText(UIUtility.cleanTransactionNumberString(lastYearReport.getNumTrans()));</b>
+<b class="nc">&nbsp;        totalTransactions.setText(UIUtility.cleanTotalString(lastYearReport.getTotal()));</b>
+<b class="nc">&nbsp;        average.setText(UIUtility.cleanAverageString(lastYearReport.getAvgTransSize()));</b>
+<b class="nc">&nbsp;        percentage.setText(UIUtility.cleanPercentageString(lastYearReport.getPercentage()));</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleCustomDateReport(){
+<b class="nc">&nbsp;        Button fromButton = findViewById(R.id.button_report_from);</b>
+<b class="nc">&nbsp;        Button toButton = findViewById(R.id.button_report_to);</b>
+<b class="nc">&nbsp;        Button getReport = findViewById(R.id.button_get_report);</b>
+<b class="nc">&nbsp;        fromDate = new DateTime(currTime.getYear(),currTime.getMonthValue()  , currTime.getDayOfMonth());</b>
+<b class="nc">&nbsp;        toDate = new DateTime(currTime.getYear(),currTime.getMonthValue()  , currTime.getDayOfMonth());</b>
+<b class="nc">&nbsp;        String currTimeString = currTime.getDayOfMonth() + &quot;/&quot; + currTime.getMonthValue() + &quot;/&quot; +  currTime.getYear() ;</b>
+<b class="nc">&nbsp;        fromButton.setText(currTimeString);</b>
+<b class="nc">&nbsp;        toButton.setText(currTimeString);</b>
+<b class="nc">&nbsp;        fromButton.setOnClickListener(new View.OnClickListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void onClick(View v) {
+<b class="nc">&nbsp;                chooseTimeDialog(fromButton,true);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        toButton.setOnClickListener(new View.OnClickListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void onClick(View v) {
+<b class="nc">&nbsp;                chooseTimeDialog(toButton,false);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        getReport.setOnClickListener(new View.OnClickListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void onClick(View v) {
+<b class="nc">&nbsp;                if (fromDate == null || toDate == null){</b>
+<b class="nc">&nbsp;                    Toast.makeText(ViewReportActivity.this,&quot;Please choose 2 dates&quot;,Toast.LENGTH_SHORT).show();</b>
+&nbsp;                }else {
+<b class="nc">&nbsp;                    IReport timeCustomReport = reportManager.reportOnUserProvidedDates(UserManager.getUserID(), fromDate, toDate);</b>
+&nbsp;
+<b class="nc">&nbsp;                    TextView transactionNum = findViewById(R.id.textview_customTime_totalTrans);</b>
+<b class="nc">&nbsp;                    TextView  total = findViewById(R.id.textview_customTime_totalAmount);</b>
+<b class="nc">&nbsp;                    TextView average = findViewById(R.id.textview_customTime_average);</b>
+<b class="nc">&nbsp;                    TextView percentage = findViewById(R.id.textview_customTime_percentage);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;                    transactionNum.setText(UIUtility.cleanTransactionNumberString(timeCustomReport.getNumTrans()));</b>
+<b class="nc">&nbsp;                    total.setText(UIUtility.cleanTotalString(timeCustomReport.getTotal()));</b>
+<b class="nc">&nbsp;                    average.setText(UIUtility.cleanAverageString(timeCustomReport.getAvgTransSize()));</b>
+<b class="nc">&nbsp;                    percentage.setText(UIUtility.cleanPercentageString(timeCustomReport.getPercentage()));</b>
+&nbsp;
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleTimebaseReport(){
+<b class="nc">&nbsp;        ShimmerFrameLayout shimmerFrameLayout = findViewById(R.id.shimmer_timebase_report);</b>
+<b class="nc">&nbsp;        ViewPager viewPagerCustom = findViewById(R.id.gridlayout_timebase_report);</b>
+<b class="nc">&nbsp;        Spinner spinner = findViewById(R.id.spinner_timebase_report);</b>
+&nbsp;
+&nbsp;
+&nbsp;//        SliderAdapterCatGeneral adapterCustom= new SliderAdapterCatGeneral(this,categoryHandler.getAllCategory());
+&nbsp;
+&nbsp;        //Uncomment this when Toran done
+&nbsp;//        reportManager.reportOnLastYearByMonth(1);
+&nbsp;//        SliderAdapterTimeBase adapterCustom= new SliderAdapterTimeBase(this,reportManager.reportOnLastYearByMonth(1),&quot;Month&quot;);
+&nbsp;//        viewPagerCustom.setAdapter(adapterCustom);
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        ArrayAdapter&lt;String&gt;adapter = new ArrayAdapter&lt;&gt;(this, R.layout.custom_snipper_report,time_base_option);</b>
+<b class="nc">&nbsp;        adapter.setDropDownViewResource( android.R.layout.select_dialog_singlechoice);</b>
+<b class="nc">&nbsp;        spinner.setAdapter(adapter);</b>
+&nbsp;
+<b class="nc">&nbsp;        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){</b>
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+<b class="nc">&nbsp;                viewPagerCustom.setVisibility(View.INVISIBLE);</b>
+<b class="nc">&nbsp;                shimmerFrameLayout.setVisibility(View.VISIBLE);</b>
+<b class="nc">&nbsp;                shimmerFrameLayout.startShimmerAnimation();</b>
+&nbsp;
+<b class="nc">&nbsp;                if (position == 0){</b>
+&nbsp;//                    SliderAdapterTimeBase adapterCustom= new SliderAdapterTimeBase(getApplicationContext(),reportManager.reportOnLastYearByMonth(1),&quot;Month&quot;);
+&nbsp;//                    viewPagerCustom.setAdapter(adapterCustom);
+&nbsp;                }else {
+&nbsp;//                    SliderAdapterTimeBase adapterCustom= new SliderAdapterTimeBase(getApplicationContext(),reportManager.reportOnLastMonthByWeek(1),&quot;Week&quot;);
+&nbsp;//                    viewPagerCustom.setAdapter(adapterCustom);
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                Handler handler = new Handler();</b>
+<b class="nc">&nbsp;                handler.postDelayed(()-&gt;{</b>
+<b class="nc">&nbsp;                    viewPagerCustom.setVisibility(View.VISIBLE);</b>
+<b class="nc">&nbsp;                    shimmerFrameLayout.stopShimmerAnimation();</b>
+<b class="nc">&nbsp;                    shimmerFrameLayout.setVisibility(View.INVISIBLE);</b>
+&nbsp;                },3000);
+&nbsp;            }
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) {
+&nbsp;
+<b class="nc">&nbsp;            }</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    // Handle the bottom navigation bar
+&nbsp;    private void navBarHandling(){
+<b class="nc">&nbsp;        BottomNavigationView navView = findViewById(R.id.nav_view);</b>
+<b class="nc">&nbsp;        navView.setSelectedItemId(R.id.navigation_home);</b>
+<b class="nc">&nbsp;        BottomNavigationHandler navigationHandler = new BottomNavigationHandler();</b>
+&nbsp;
+<b class="nc">&nbsp;        navView.setOnItemSelectedListener((item -&gt; {</b>
+<b class="nc">&nbsp;            if (item.getItemId() == R.id.navigation_home){</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            Class&lt;? extends AppCompatActivity&gt; newActivity = navigationHandler.select(item.getItemId());</b>
+<b class="nc">&nbsp;            if(newActivity != null){</b>
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), newActivity));</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }));
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleGeneralReport(){
+<b class="nc">&nbsp;        String spendString = &quot;You&#39;ve spent &quot; + UIUtility.cleanTotalString(generalReportHandler.totalSpending(UserManager.getUserID()));</b>
+<b class="nc">&nbsp;        String makeTransactions = &quot;You&#39;ve made &quot; + UIUtility.cleanTransactionNumberString(generalReportHandler.numTransactions(UserManager.getUserID()));</b>
+<b class="nc">&nbsp;        TextView short_text = findViewById(R.id.textview_summary_report_short);</b>
+<b class="nc">&nbsp;        TextView long_text = findViewById(R.id.textview_summary_report_long);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (spendString.length() &gt; makeTransactions.length()){</b>
+<b class="nc">&nbsp;            long_text.setText(spendString);</b>
+<b class="nc">&nbsp;            short_text.setText(makeTransactions);</b>
+&nbsp;        }else{
+<b class="nc">&nbsp;            long_text.setText(makeTransactions);</b>
+<b class="nc">&nbsp;            short_text.setText(spendString);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleCustomCategoryReport(){
+<b class="nc">&nbsp;        Spinner spinner = findViewById(R.id.spinner_report);</b>
+&nbsp;
+<b class="nc">&nbsp;        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+<b class="nc">&nbsp;                String item = parent.getItemAtPosition(position).toString();</b>
+<b class="nc">&nbsp;                Toast.makeText(ViewReportActivity.this,item,Toast.LENGTH_SHORT).show();</b>
+&nbsp;
+<b class="nc">&nbsp;                String spendMostString = &quot;Mostly spending on &quot;;</b>
+<b class="nc">&nbsp;                String spendLeastString = &quot;Least spending on &quot;;</b>
+<b class="nc">&nbsp;                List&lt;IMainCategory&gt;categories = new ArrayList&lt;IMainCategory&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;                switch (position){</b>
+&nbsp;                    case 2:
+<b class="nc">&nbsp;                        categories = generalReportHandler.sortByPercent(UserManager.getUserID(),true);</b>
+<b class="nc">&nbsp;                        break;</b>
+&nbsp;                    case 1:
+<b class="nc">&nbsp;                        categories = generalReportHandler.sortByTotal(UserManager.getUserID(),true);</b>
+<b class="nc">&nbsp;                        break;</b>
+&nbsp;                    default:
+<b class="nc">&nbsp;                        categories = generalReportHandler.sortByAverage(UserManager.getUserID(),true);</b>
+&nbsp;                        break;
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                if(categories.size() == 0){</b>
+<b class="nc">&nbsp;                    findViewById(R.id.imageView_check_custom).setVisibility(View.INVISIBLE);</b>
+<b class="nc">&nbsp;                    findViewById(R.id.textview_custom_report_short).setVisibility(View.INVISIBLE);</b>
+<b class="nc">&nbsp;                    ((TextView)findViewById(R.id.textview_custom_report_long)).setText(&quot;Group transactions to categories to see the report.&quot;);</b>
+&nbsp;                }else{
+<b class="nc">&nbsp;                    findViewById(R.id.textview_custom_report_short).setVisibility(View.VISIBLE);</b>
+<b class="nc">&nbsp;                    spendMostString += categories.get(0).getName();</b>
+<b class="nc">&nbsp;                    spendLeastString += categories.get(categories.size()-1).getName();</b>
+<b class="nc">&nbsp;                    if( spendMostString.length() &gt; spendLeastString.length()){</b>
+<b class="nc">&nbsp;                        ((TextView)findViewById(R.id.textview_custom_report_long)).setText(spendMostString);</b>
+<b class="nc">&nbsp;                        ((TextView)findViewById(R.id.textview_custom_report_short)).setText(spendLeastString);</b>
+&nbsp;                    }else{
+<b class="nc">&nbsp;                        ((TextView)findViewById(R.id.textview_custom_report_long)).setText(spendLeastString);</b>
+<b class="nc">&nbsp;                        ((TextView)findViewById(R.id.textview_custom_report_short)).setText(spendMostString);</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) {
+&nbsp;                //We did nothing in purpose, but we still have to have this function because of it need to be overrided.
+<b class="nc">&nbsp;            }</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        ArrayAdapter&lt;String&gt;adapter = new ArrayAdapter&lt;&gt;(this, R.layout.custom_snipper_report,custom_option);</b>
+<b class="nc">&nbsp;        adapter.setDropDownViewResource( android.R.layout.select_dialog_singlechoice);</b>
+<b class="nc">&nbsp;        spinner.setAdapter(adapter);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleCategoriesReport(){
+<b class="nc">&nbsp;        ViewPager viewPagerCategory = findViewById(R.id.viewpager_report);</b>
+<b class="nc">&nbsp;        List&lt;MainCategory&gt; categoryList = categoryHandler.getAllCategory(UserManager.getUserID());</b>
+<b class="nc">&nbsp;        if(categoryList.size() &gt;0 ){</b>
+<b class="nc">&nbsp;            ConstraintLayout nonReport = findViewById(R.id.report_no_category_report);</b>
+<b class="nc">&nbsp;            nonReport.setVisibility(View.INVISIBLE);</b>
+<b class="nc">&nbsp;            SliderAdapterCatGeneral adapter = new SliderAdapterCatGeneral(this,categoryList);</b>
+<b class="nc">&nbsp;            viewPagerCategory.setAdapter(adapter);</b>
+<b class="nc">&nbsp;        }else{</b>
+<b class="nc">&nbsp;            ConstraintLayout nonReport = findViewById(R.id.report_no_category_report);</b>
+<b class="nc">&nbsp;            nonReport.setVisibility(View.VISIBLE);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void chooseTimeDialog(Button button,boolean from){
+&nbsp;
+<b class="nc">&nbsp;        DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+<b class="nc">&nbsp;                String displayDay = String.valueOf(dayOfMonth ) + &quot;/&quot;  + String.valueOf(month+ 1) + &quot;/&quot; + String.valueOf(year);</b>
+<b class="nc">&nbsp;                DateTime newDate = new DateTime(year, month,  dayOfMonth);</b>
+<b class="nc">&nbsp;                if(from){</b>
+<b class="nc">&nbsp;                    ViewReportActivity.this.fromDate = newDate;</b>
+&nbsp;//                    displayDay = newDate.toString();
+&nbsp;                }else {
+<b class="nc">&nbsp;                    ViewReportActivity.this.toDate = newDate;</b>
+&nbsp;//                    displayDay = newDate.toString();
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                button.setText(displayDay);</b>
+&nbsp;
+&nbsp;            }
+<b class="nc">&nbsp;        }, currTime.getYear(), currTime.getMonthValue() -1, currTime.getDayOfMonth());</b>
+<b class="nc">&nbsp;        dialog.show();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    public static void setDBPathName(final String name) {
+&nbsp;        try {
+<b class="fc">&nbsp;            Class.forName(&quot;org.hsqldb.jdbcDriver&quot;).newInstance();</b>
+<b class="nc">&nbsp;        } catch (InstantiationException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        } catch (IllegalAccessException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        dbName = name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static String getDBPathName() {
+<b class="fc">&nbsp;        return dbName;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

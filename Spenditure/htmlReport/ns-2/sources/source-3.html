@@ -1,0 +1,114 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TransactionPersistence</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.database</a>
+</div>
+
+<h1>Coverage Summary for Class: TransactionPersistence (com.spenditure.database)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">TransactionPersistence</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.database;
+&nbsp;
+&nbsp;import com.spenditure.object.IDateTime;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * TransactionPersistence.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Jared Rost,
+&nbsp; * @date Feb 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file provides information on what methods the transaction database handler should implement
+&nbsp; *
+&nbsp; **/
+&nbsp;
+&nbsp;public interface TransactionPersistence {
+&nbsp;
+&nbsp;    // query database
+&nbsp;
+&nbsp;    int countTransactions();
+&nbsp;    List&lt;Transaction&gt; getAllTransactions(int userID);
+&nbsp;    List&lt;Transaction&gt; getAllTransactionsForUser(int userID);
+&nbsp;    boolean addTransaction(Transaction newTransaction);
+&nbsp;    boolean modifyTransaction(Transaction targetTransaction);
+&nbsp;    boolean deleteTransaction(int transactionID);
+&nbsp;    Transaction getTransactionByID(int id);
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionByName(int userID, String name);
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionsByPlace(int userID, String place);
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionsByAmount(int userID, double lower, double upper);
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionsByDateTime(int userID, IDateTime lower, IDateTime upper);
+&nbsp;
+&nbsp;
+&nbsp;    ArrayList&lt;Transaction&gt; getTransactionsByCategoryID(int categoryID);
+&nbsp;
+&nbsp;    // sorting
+&nbsp;    ArrayList&lt;Transaction&gt; getNewestTransactionsForUser(int userID);
+&nbsp;    ArrayList&lt;Transaction&gt; getOldestTransactionsForUser(int userID);
+&nbsp;
+&nbsp;    public void printTransactionTable();
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

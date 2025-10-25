@@ -1,0 +1,334 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserSQL</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.database.hsqldb</a>
+</div>
+
+<h1>Coverage Summary for Class: UserSQL (com.spenditure.database.hsqldb)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserSQL</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    81.3%
+  </span>
+  <span class="absValue">
+    (74/91)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.database.hsqldb;
+&nbsp;
+&nbsp;import android.annotation.SuppressLint;
+&nbsp;
+&nbsp;import com.spenditure.database.UserPersistence;
+&nbsp;import com.spenditure.logic.exceptions.InvalidUserInformationException;
+&nbsp;import com.spenditure.object.MainCategory;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;import com.spenditure.object.User;
+&nbsp;
+&nbsp;import java.sql.Connection;
+&nbsp;import java.sql.DriverManager;
+&nbsp;import java.sql.PreparedStatement;
+&nbsp;import java.sql.ResultSet;
+&nbsp;import java.sql.SQLException;
+&nbsp;import java.sql.Statement;
+&nbsp;
+&nbsp;public class UserSQL implements UserPersistence {
+&nbsp;
+&nbsp;    private final String dbPath;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public UserSQL(final String dbPath) {</b>
+<b class="fc">&nbsp;        this.dbPath = dbPath;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Connection connection() throws SQLException {
+&nbsp;        //System.out.println(&quot;jdbc:hsqldb:file:&quot; + dbPath + &quot;;shutdown=true&quot;);
+<b class="fc">&nbsp;        return DriverManager.getConnection(&quot;jdbc:hsqldb:file:&quot; + dbPath + &quot;;shutdown=true&quot;, &quot;SA&quot;, &quot;&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;//    private User fromResultSet(final ResultSet rs) throws SQLException {
+&nbsp;//
+&nbsp;//        return null;
+&nbsp;//    }
+&nbsp;
+&nbsp;    //tested
+&nbsp;    @Override
+&nbsp;    public String getUserName(int userID) {
+<b class="fc">&nbsp;        String userName = &quot;&quot;;</b>
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM users\nWHERE userID=?&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1,userID);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+<b class="fc">&nbsp;            if(resultSet.next()) {</b>
+<b class="fc">&nbsp;                userName = resultSet.getString(&quot;USERNAME&quot;);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return userName;</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private int getNumberOfUsers() {
+<b class="fc">&nbsp;        int count = 0;</b>
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final Statement st = connection.createStatement();</b>
+<b class="fc">&nbsp;            final ResultSet rs = st.executeQuery(&quot;SELECT * FROM users&quot;);</b>
+<b class="fc">&nbsp;            while (rs.next())</b>
+&nbsp;            {
+<b class="fc">&nbsp;                int userID = rs.getInt(&quot;USERID&quot;);</b>
+<b class="fc">&nbsp;                System.out.println(&quot;UserID: &quot; + userID);</b>
+&nbsp;
+<b class="fc">&nbsp;                String username = rs.getString(&quot;USERNAME&quot;);</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Username: &quot; + username);</b>
+&nbsp;
+<b class="fc">&nbsp;                String password = rs.getString(&quot;PASSWORD&quot;);</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Password: &quot; + password);</b>
+&nbsp;
+<b class="fc">&nbsp;                count++;</b>
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;            rs.close();</b>
+<b class="fc">&nbsp;            st.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return count;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int login(String username, String password) {
+&nbsp;        //if username + password combo exists in db
+&nbsp;        //return userID
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM users\nWHERE USERNAME=? AND PASSWORD=?;&quot;);</b>
+<b class="fc">&nbsp;            statement.setString(1, username);</b>
+<b class="fc">&nbsp;            statement.setString(2, password);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            if(resultSet.next()) {</b>
+<b class="fc">&nbsp;                return resultSet.getInt(&quot;USERID&quot;);</b>
+&nbsp;            }
+&nbsp;            else {
+<b class="nc">&nbsp;                throw new InvalidUserInformationException(&quot;Wrong username or password&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean changePassword(int userID, String oldPassword, String newPassword) {
+&nbsp;        //need to first check if the
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement selectStatement  = connection.prepareStatement(&quot;SELECT * FROM users\nWHERE USERID=? AND PASSWORD=?;&quot;);</b>
+<b class="fc">&nbsp;            selectStatement .setInt(1,userID);</b>
+<b class="fc">&nbsp;            selectStatement .setString(2, oldPassword);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = selectStatement .executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            if(resultSet.next()) {</b>
+<b class="fc">&nbsp;                final PreparedStatement updateStatement = connection.prepareStatement(&quot;UPDATE users\nSET PASSWORD=?\nWHERE USERID=?&quot;);</b>
+<b class="fc">&nbsp;                updateStatement.setString(1, newPassword);</b>
+<b class="fc">&nbsp;                updateStatement.setInt(2,userID);</b>
+&nbsp;
+<b class="fc">&nbsp;                int rowsAffected = updateStatement.executeUpdate();</b>
+&nbsp;
+<b class="fc">&nbsp;                if (rowsAffected == 1) {</b>
+<b class="fc">&nbsp;                    return true; // Password updated successfully</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Failed to update password.&quot;);</b>
+&nbsp;                }
+&nbsp;
+&nbsp;            }
+&nbsp;            else {
+<b class="nc">&nbsp;                throw new InvalidUserInformationException(&quot;UserID and password combination does not exist.&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean changeUsername(int userID, String newUsername) {
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement updateStatement = connection.prepareStatement(&quot;UPDATE users\nSET USERNAME=?\nWHERE USERID=?&quot;);</b>
+<b class="fc">&nbsp;            updateStatement.setString(1, newUsername);</b>
+<b class="fc">&nbsp;            updateStatement.setInt(2, userID);</b>
+&nbsp;
+<b class="fc">&nbsp;            int rowsAffected = updateStatement.executeUpdate();</b>
+<b class="fc">&nbsp;            if (rowsAffected == 1) {</b>
+<b class="fc">&nbsp;                return true; // Password updated successfully</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;Failed to update username.&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int register( String username, String password,String email) {
+<b class="fc">&nbsp;        System.out.println(&quot;We have tested...&quot;);</b>
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+&nbsp;
+<b class="fc">&nbsp;            String insertQuery = &quot;INSERT INTO users (userid, username, password, email) VALUES (?, ?, ?, ?)&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;            int newUserID = getNumberOfUsers() + 1;</b>
+<b class="fc">&nbsp;            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {</b>
+&nbsp;                // Set values for the parameters
+<b class="fc">&nbsp;                preparedStatement.setInt(1, newUserID);</b>
+<b class="fc">&nbsp;                preparedStatement.setString(2, username);</b>
+<b class="fc">&nbsp;                preparedStatement.setString(3, password);</b>
+<b class="fc">&nbsp;                preparedStatement.setString(4, email);</b>
+&nbsp;
+&nbsp;                // Execute the query
+<b class="fc">&nbsp;                int rowsAffected = preparedStatement.executeUpdate();</b>
+&nbsp;
+<b class="fc">&nbsp;                if (rowsAffected &gt; 0) {</b>
+<b class="fc">&nbsp;                    return newUserID;</b>
+&nbsp;                }
+&nbsp;                else {
+<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Register failed.&quot;);</b>
+&nbsp;                }
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;//    public void printUserTable() {
+&nbsp;//        try(final Connection connection = connection()) {
+&nbsp;//            final Statement st = connection.createStatement();
+&nbsp;//            final ResultSet rs = st.executeQuery(&quot;SELECT * FROM users&quot;);
+&nbsp;//            while (rs.next())
+&nbsp;//            {
+&nbsp;//                int userID = rs.getInt(&quot;USERID&quot;);
+&nbsp;//                String username = rs.getString(&quot;USERNAME&quot;);
+&nbsp;//                String password = rs.getString(&quot;PASSWORD&quot;);
+&nbsp;//
+&nbsp;//                @SuppressLint(&quot;DefaultLocale&quot;) String printUser = String.format(&quot;UserID: %d, Username: %s, Password: %s&quot;, userID, username, password);
+&nbsp;//                System.out.println(printUser);
+&nbsp;//            }
+&nbsp;//            rs.close();
+&nbsp;//            st.close();
+&nbsp;//
+&nbsp;//        }
+&nbsp;//        catch (final SQLException e) {
+&nbsp;//            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception
+&nbsp;//        }
+&nbsp;//
+&nbsp;//    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

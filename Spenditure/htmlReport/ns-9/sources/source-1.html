@@ -1,0 +1,269 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AddNewCategory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation.category</a>
+</div>
+
+<h1>Coverage Summary for Class: AddNewCategory (com.spenditure.presentation.category)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddNewCategory</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AddNewCategory$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddNewCategory$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.presentation.category;
+&nbsp;
+&nbsp;import android.app.Activity;
+&nbsp;import android.content.Context;
+&nbsp;import android.content.DialogInterface;
+&nbsp;import android.graphics.Color;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.text.Editable;
+&nbsp;import android.text.TextWatcher;
+&nbsp;import android.view.LayoutInflater;
+&nbsp;import android.view.View;
+&nbsp;import android.view.ViewGroup;
+&nbsp;import android.widget.Adapter;
+&nbsp;import android.widget.Button;
+&nbsp;import android.widget.EditText;
+&nbsp;import android.widget.Toast;
+&nbsp;
+&nbsp;import androidx.annotation.NonNull;
+&nbsp;import androidx.annotation.Nullable;
+&nbsp;
+&nbsp;import com.example.spenditure.R;
+&nbsp;import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+&nbsp;import com.spenditure.logic.CategoryHandler;
+&nbsp;import com.spenditure.logic.UserHandler;
+&nbsp;import com.spenditure.logic.exceptions.InvalidCategoryException;
+&nbsp;import com.spenditure.presentation.IOnDialogCloseListener;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Pop up for adding Category
+&nbsp; * @author Bao Ngo
+&nbsp; * @version 04 Mar 2024
+&nbsp; */
+<b class="nc">&nbsp;public class AddNewCategory extends BottomSheetDialogFragment {</b>
+&nbsp;    public static final String TAG = &quot;AddNewCategory&quot;;
+&nbsp;    private EditText mCategoryEdit;
+&nbsp;    private Button mSaveBtn;
+&nbsp;    private CategoryHandler categoryHandler;
+&nbsp;    private Context context;
+&nbsp;
+&nbsp;    //Return new instance of pop up component
+&nbsp;    public static AddNewCategory newInstance(){
+<b class="nc">&nbsp;        return new AddNewCategory();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Nullable
+&nbsp;    @Override
+&nbsp;    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+<b class="nc">&nbsp;        return inflater.inflate(R.layout.add_new_category,container,false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onViewCreated(view, savedInstanceState);</b>
+&nbsp;
+<b class="nc">&nbsp;        mCategoryEdit = view.findViewById(R.id.category_edittext);</b>
+<b class="nc">&nbsp;        mSaveBtn = view.findViewById(R.id.category_save_btn);</b>
+<b class="nc">&nbsp;        this.categoryHandler = new CategoryHandler(false);</b>
+&nbsp;
+<b class="nc">&nbsp;        mCategoryEdit.addTextChangedListener(new TextWatcher() {</b>
+&nbsp;            @Override
+&nbsp;            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+&nbsp;                //We did nothing in purpose, but we still have to have this function because of it need to be overrided.
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void onTextChanged(CharSequence s, int start, int before, int count) {
+<b class="nc">&nbsp;                if(s.toString().equals(&quot;&quot;)){</b>
+<b class="nc">&nbsp;                    mSaveBtn.setEnabled(false);</b>
+<b class="nc">&nbsp;                    mSaveBtn.setBackgroundColor(Color.GRAY);</b>
+&nbsp;                }else{
+<b class="nc">&nbsp;                    mSaveBtn.setEnabled(true);</b>
+<b class="nc">&nbsp;                    mSaveBtn.setBackgroundColor(getResources().getColor(R.color.green_dark));</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void afterTextChanged(Editable s) {
+&nbsp;                //We did nothing in purpose, but we still have to have this function because of it need to be overrided.
+<b class="nc">&nbsp;            }</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        mSaveBtn.setOnClickListener(new View.OnClickListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void onClick(View v) {
+<b class="nc">&nbsp;                String newCategory = mCategoryEdit.getText().toString();</b>
+<b class="nc">&nbsp;                if(newCategory.isEmpty()){</b>
+<b class="nc">&nbsp;                    Toast.makeText(context,&quot;Empty Category not Allowed&quot;, Toast.LENGTH_SHORT).show();</b>
+&nbsp;
+&nbsp;                }else{
+&nbsp;                    try {
+<b class="nc">&nbsp;                        categoryHandler.addCategory(newCategory, UserManager.getUserID());</b>
+<b class="nc">&nbsp;                    }catch (InvalidCategoryException e){</b>
+<b class="nc">&nbsp;                        Toast.makeText(context,&quot;Category already exists&quot;, Toast.LENGTH_SHORT).show();</b>
+<b class="nc">&nbsp;                    }</b>
+&nbsp;
+<b class="nc">&nbsp;                    Toast.makeText(context,&quot;Category added successfully&quot;, Toast.LENGTH_SHORT).show();</b>
+&nbsp;
+&nbsp;                }
+<b class="nc">&nbsp;                dismiss();</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onAttach(@NonNull Context context) {
+<b class="nc">&nbsp;        super.onAttach(context);</b>
+<b class="nc">&nbsp;        this.context = context;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onDismiss(@NonNull DialogInterface dialog) {
+<b class="nc">&nbsp;        super.onDismiss(dialog);</b>
+<b class="nc">&nbsp;        Activity activity = getActivity();</b>
+<b class="nc">&nbsp;        if(activity instanceof IOnDialogCloseListener){</b>
+<b class="nc">&nbsp;            ((IOnDialogCloseListener)activity).onDialogClose(dialog);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

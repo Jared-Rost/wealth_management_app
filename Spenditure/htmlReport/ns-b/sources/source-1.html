@@ -1,0 +1,239 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CreateTransactionActivity</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation.transaction</a>
+</div>
+
+<h1>Coverage Summary for Class: CreateTransactionActivity (com.spenditure.presentation.transaction)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CreateTransactionActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CreateTransactionActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/37)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp; * CreateTransactionActivity.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Jillian Friesen, 7889402
+&nbsp; * @date Tuesday, February 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file contains all the event handlers and UI management for the Create Transaction
+&nbsp; *  activity where users can create and save a new transaction.
+&nbsp; **/
+&nbsp;
+&nbsp;
+&nbsp;package com.spenditure.presentation.transaction;
+&nbsp;
+&nbsp;import androidx.appcompat.app.AppCompatActivity;
+&nbsp;import androidx.appcompat.widget.AppCompatToggleButton;
+&nbsp;
+&nbsp;import android.content.Intent;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.view.View;
+&nbsp;import android.widget.Button;
+&nbsp;import android.widget.EditText;
+&nbsp;import android.widget.Spinner;
+&nbsp;import android.widget.Toast;
+&nbsp;
+&nbsp;import com.google.android.material.bottomnavigation.BottomNavigationView;
+&nbsp;import com.spenditure.logic.TransactionHandler;
+&nbsp;import com.spenditure.logic.CategoryHandler;
+&nbsp;import com.spenditure.logic.UserHandler;
+&nbsp;import com.spenditure.logic.exceptions.InvalidTransactionException;
+&nbsp;import com.spenditure.object.DateTime;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;
+&nbsp;import com.example.spenditure.R;
+&nbsp;import com.spenditure.presentation.BottomNavigationHandler;
+&nbsp;import com.spenditure.presentation.LoginActivity;
+&nbsp;import com.spenditure.presentation.category.CustomCategorySpinnerAdapter;
+&nbsp;import com.spenditure.presentation.category.ViewCategoryActivity;
+&nbsp;import com.spenditure.presentation.report.ViewReportActivity;
+&nbsp;
+<b class="nc">&nbsp;public class CreateTransactionActivity extends AppCompatActivity {</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc">&nbsp;        setContentView(R.layout.activity_create_transaction);</b>
+&nbsp;
+&nbsp;        // Set up click event for the Create Transaction Button
+<b class="nc">&nbsp;        Button button = (Button) findViewById(R.id.button_create_transaction);</b>
+<b class="nc">&nbsp;        button.setOnClickListener(new View.OnClickListener() {</b>
+&nbsp;            public void onClick(View v) {
+&nbsp;                // Call helper method
+<b class="nc">&nbsp;                Transaction newTransaction = createTransaction();</b>
+&nbsp;
+&nbsp;                try {
+<b class="nc">&nbsp;                    TransactionHandler handler = new TransactionHandler(true);</b>
+<b class="nc">&nbsp;                    handler.addTransaction(newTransaction);</b>
+&nbsp;
+&nbsp;                    // Return to the main window
+<b class="nc">&nbsp;                    startActivity(new Intent(getApplicationContext(), ViewReportActivity.class));</b>
+<b class="nc">&nbsp;                } catch (InvalidTransactionException e) {</b>
+<b class="nc">&nbsp;                    Toast.makeText(CreateTransactionActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        navBarHandling();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Handle the bottom navigation bar
+&nbsp;    private void navBarHandling(){
+<b class="nc">&nbsp;        BottomNavigationView navView = findViewById(R.id.nav_view);</b>
+<b class="nc">&nbsp;        navView.setSelectedItemId(R.id.navigation_create_transaction);</b>
+&nbsp;
+<b class="nc">&nbsp;        navView.setOnItemSelectedListener((item -&gt; {</b>
+<b class="nc">&nbsp;            if (item.getItemId() == R.id.navigation_home) {</b>
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), ViewReportActivity.class));</b>
+<b class="nc">&nbsp;                return true;</b>
+<b class="nc">&nbsp;            } else if (item.getItemId() == R.id.navigation_create_transaction) {</b>
+<b class="nc">&nbsp;                return true;</b>
+<b class="nc">&nbsp;            } else if (item.getItemId() == R.id.navigation_view_transactions) {</b>
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), ViewTransactionsActivity.class));</b>
+<b class="nc">&nbsp;                return true;</b>
+<b class="nc">&nbsp;            }else if(item.getItemId() == R.id.navigation_category){</b>
+<b class="nc">&nbsp;                startActivity(new Intent(getApplicationContext(), ViewCategoryActivity.class));</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        }));
+&nbsp;    }
+&nbsp;
+&nbsp;    // Helper method: create and return new Transaction object made from user-entered info
+&nbsp;    private Transaction createTransaction() {
+&nbsp;        // Parse all the user fields
+<b class="nc">&nbsp;        EditText whatTheHeck = (EditText) findViewById(R.id.edittext_what_the_heck);</b>
+<b class="nc">&nbsp;        DateTime date = new DateTime(2023,1,1,1,1,0); // Set default date for now</b>
+<b class="nc">&nbsp;        EditText place = (EditText) findViewById(R.id.edittext_place);</b>
+<b class="nc">&nbsp;        EditText amount = (EditText) findViewById(R.id.edittext_amount);</b>
+<b class="nc">&nbsp;        EditText comments = (EditText) findViewById(R.id.edittext_comments);</b>
+<b class="nc">&nbsp;        AppCompatToggleButton type = (AppCompatToggleButton) findViewById(R.id.togglebutton_type);</b>
+&nbsp;
+&nbsp;        // Create the new transaction object
+<b class="nc">&nbsp;        Transaction newTransaction = new Transaction(UserManager.getUserID(), whatTheHeck.getText().toString(), date, place.getText().toString(), Double.parseDouble(amount.getText().toString()), comments.getText().toString(), type.isChecked());</b>
+&nbsp;
+<b class="nc">&nbsp;        return newTransaction;</b>
+&nbsp;    };
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

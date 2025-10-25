@@ -1,0 +1,149 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TouchHelper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.presentation</a>
+</div>
+
+<h1>Coverage Summary for Class: TouchHelper (com.spenditure.presentation)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TouchHelper</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.presentation;
+&nbsp;
+&nbsp;import android.graphics.Canvas;
+&nbsp;import android.graphics.Color;
+&nbsp;
+&nbsp;import androidx.annotation.NonNull;
+&nbsp;import androidx.recyclerview.widget.ItemTouchHelper;
+&nbsp;import androidx.recyclerview.widget.RecyclerView;
+&nbsp;
+&nbsp;import com.example.spenditure.R;
+&nbsp;import com.spenditure.presentation.category.CategoryAdapter;
+&nbsp;
+&nbsp;import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+&nbsp;
+&nbsp;public class TouchHelper extends ItemTouchHelper.SimpleCallback {
+&nbsp;    private CategoryAdapter adapter;
+&nbsp;
+&nbsp;    public TouchHelper(CategoryAdapter adapter) {
+<b class="nc">&nbsp;        super(0,  ItemTouchHelper.RIGHT);</b>
+<b class="nc">&nbsp;        this.adapter = adapter;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+<b class="nc">&nbsp;        final int position = viewHolder.getAdapterPosition();</b>
+<b class="nc">&nbsp;        if(direction == ItemTouchHelper.RIGHT){</b>
+<b class="nc">&nbsp;            adapter.deleteTask(position);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+<b class="nc">&nbsp;        new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)</b>
+<b class="nc">&nbsp;                .addSwipeRightActionIcon(R.drawable.symbol_delete)</b>
+<b class="nc">&nbsp;                .addSwipeRightBackgroundColor(Color.RED)</b>
+<b class="nc">&nbsp;                .create()</b>
+<b class="nc">&nbsp;                .decorate();</b>
+&nbsp;
+<b class="nc">&nbsp;        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

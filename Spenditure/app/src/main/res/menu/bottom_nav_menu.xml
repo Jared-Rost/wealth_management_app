@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_category"
+        android:title="@string/title_category"
+        android:icon="@drawable/symbol_list"/>
+
+    <item
+        android:id="@+id/navigation_home"
+        android:title="@string/title_reports"
+        android:icon="@drawable/symbol_chartline"/>
+    <item
+        android:id="@+id/navigation_create_transaction"
+        android:title="@string/title_create_transaction"
+        android:icon="@drawable/symbol_circleplus"/>
+
+    <item
+        android:id="@+id/navigation_view_transactions"
+        android:title="@string/title_view_transactions"
+        android:icon="@drawable/symbol_holding_dollar"/>
+
+    <item
+        android:id="@+id/navigation_user"
+        android:title="@string/title_profile"
+        android:icon="@drawable/symbol_user"/>
+
+
+</menu>

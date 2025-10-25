@@ -1,0 +1,384 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ReportManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.logic</a>
+</div>
+
+<h1>Coverage Summary for Class: ReportManager (com.spenditure.logic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReportManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    11.8%
+  </span>
+  <span class="absValue">
+    (2/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.9%
+  </span>
+  <span class="absValue">
+    (4/102)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.logic;
+&nbsp;
+&nbsp;import static com.spenditure.logic.DateTimeAdjuster.correctDateTime;
+&nbsp;import static com.spenditure.logic.DateTimeValidator.validateDateTime;
+&nbsp;import static java.lang.Math.abs;
+&nbsp;import static java.lang.Math.sqrt;
+&nbsp;
+&nbsp;import androidx.annotation.NonNull;
+&nbsp;
+&nbsp;import com.spenditure.application.Services;
+&nbsp;import com.spenditure.database.CategoryPersistence;
+&nbsp;import com.spenditure.database.TransactionPersistence;
+&nbsp;import com.spenditure.logic.exceptions.InvalidDateException;
+&nbsp;import com.spenditure.object.DateTime;
+&nbsp;import com.spenditure.object.IDateTime;
+&nbsp;import com.spenditure.object.IReport;
+&nbsp;import com.spenditure.object.Report;
+&nbsp;import com.spenditure.object.CategoryStatistics;
+&nbsp;import com.spenditure.object.MainCategory;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.List;
+&nbsp;import java.time.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * ReportManager.java
+&nbsp; *
+&nbsp; * COMP3350 SECTION A02
+&nbsp; *
+&nbsp; * @author Trevor,
+&nbsp; * @date Feb 7, 2024
+&nbsp; *
+&nbsp; * PURPOSE:
+&nbsp; *  This file handles all logic calculations related to generating reports
+&nbsp; *
+&nbsp; **/
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;public class ReportManager implements IReportManager {</b>
+&nbsp;
+&nbsp;    //instance vars
+&nbsp;    private TransactionPersistence dataAccessTransaction;
+&nbsp;    private CategoryPersistence dataAccessCategory;
+&nbsp;
+<b class="fc">&nbsp;    public ReportManager(boolean getStubDB) {</b>
+<b class="fc">&nbsp;        this.dataAccessTransaction = Services.getTransactionPersistence(getStubDB);</b>
+<b class="fc">&nbsp;        this.dataAccessCategory = Services.getCategoryPersistence(getStubDB);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public IReport reportOnLastYear(int userID)
+&nbsp;    {
+&nbsp;        // manually set to current date (probably an API for getting this info)
+<b class="nc">&nbsp;        IDateTime yearEnd = getCurrentDate();</b>
+&nbsp;        // manually set to 1 year ago from current date
+<b class="nc">&nbsp;        IDateTime yearStart = new DateTime(yearEnd.getYear()-1, yearEnd.getMonth());</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        double avgTransSize = getAverageTransactionSizeByDate(userID, yearStart, yearEnd);</b>
+<b class="nc">&nbsp;        int numTrans = countAllTransactionsByDate(userID, yearStart, yearEnd);</b>
+<b class="nc">&nbsp;        double stdDev = getStandardDeviationByDate(userID, yearStart, yearEnd);</b>
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;CategoryStatistics&gt; listOfCategoryStatistics = buildCategoryList(userID, yearStart, yearEnd);</b>
+&nbsp;
+<b class="nc">&nbsp;        return new Report(avgTransSize, numTrans, stdDev, listOfCategoryStatistics);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;IReport&gt; reportOnLastYearByMonth(int userID)
+&nbsp;    {
+<b class="nc">&nbsp;        ArrayList&lt;IReport&gt; monthReports = new ArrayList&lt;IReport&gt;();</b>
+<b class="nc">&nbsp;        DateTime today = getCurrentDate();</b>
+&nbsp;
+<b class="nc">&nbsp;        for(int i = 1; i &lt;= 12; i++)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            monthReports.add(reportOnUserProvidedDates(userID, new DateTime(today.getYear()-1, i),</b>
+<b class="nc">&nbsp;                    new DateTime(today.getYear()-1, i)));</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return monthReports;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;IReport&gt; reportOnLastMonthByWeek(int userID) {
+&nbsp;
+<b class="nc">&nbsp;        DateTime[] weekDates = new DateTime[5];</b>
+<b class="nc">&nbsp;        ArrayList&lt;IReport&gt; result = new ArrayList&lt;IReport&gt;();</b>
+<b class="nc">&nbsp;        int daysInWeek = 7;</b>
+&nbsp;
+<b class="nc">&nbsp;        weekDates[0] = getCurrentDate(); //current day</b>
+&nbsp;
+<b class="nc">&nbsp;        for( int i = 1; i &lt; weekDates.length; i ++ ) {</b>
+&nbsp;
+<b class="nc">&nbsp;            DateTime week = weekDates[i - 1].copy();</b>
+<b class="nc">&nbsp;            week.adjust(0, 0, -i * daysInWeek, 0, 0, 0);</b>
+&nbsp;
+<b class="nc">&nbsp;            weekDates[i] = week;</b>
+&nbsp;
+<b class="nc">&nbsp;            result.add(reportOnUserProvidedDates(userID, weekDates[i - 1], weekDates[i]));</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public IReport reportOnUserProvidedDates(int userID, IDateTime start, IDateTime end) {
+&nbsp;
+<b class="nc">&nbsp;        validateDateTime(start);</b>
+<b class="nc">&nbsp;        validateDateTime(end);</b>
+<b class="nc">&nbsp;        assert(userID &gt;= 0);</b>
+&nbsp;
+<b class="nc">&nbsp;        double averageTransactionSize = getAverageTransactionSizeByDate(userID, start, end);</b>
+<b class="nc">&nbsp;        int numTransactions = countAllTransactionsByDate(userID, start, end);</b>
+<b class="nc">&nbsp;        double standardDeviation = getStandardDeviationByDate(userID, start, end);</b>
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;CategoryStatistics&gt; categoryStatistics = buildCategoryList(userID, start, end);</b>
+&nbsp;
+<b class="nc">&nbsp;        return new Report( averageTransactionSize, numTransactions, standardDeviation, categoryStatistics );</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private DateTime getCurrentDate()
+&nbsp;    {
+<b class="nc">&nbsp;        LocalDate javaDateObject = LocalDate.now(); // Create a date object</b>
+<b class="nc">&nbsp;        return new DateTime(javaDateObject.getYear(), javaDateObject.getMonthValue());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private double getAverageTransactionSizeByDate(int userID, IDateTime startDate, IDateTime endDate) {
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Transaction&gt; transactions = dataAccessTransaction.getTransactionsByDateTime(userID, startDate, endDate);</b>
+&nbsp;
+<b class="nc">&nbsp;        double total = 0.00;</b>
+&nbsp;
+<b class="nc">&nbsp;        for( int i = 0; i &lt; transactions.size(); i ++ ) {</b>
+&nbsp;
+<b class="nc">&nbsp;            total += transactions.get(i).getAmount();</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if(transactions.size() &gt; 0)</b>
+<b class="nc">&nbsp;            return total / transactions.size();</b>
+&nbsp;        else
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private double getStandardDeviationByDate(int userID, IDateTime startDate, IDateTime endDate) {
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Transaction&gt; transactions = dataAccessTransaction.getTransactionsByDateTime(userID, startDate, endDate);</b>
+&nbsp;
+<b class="nc">&nbsp;        double mean = getAverageTransactionSizeByDate(userID, startDate, endDate);</b>
+<b class="nc">&nbsp;        double sum = 0.00;</b>
+<b class="nc">&nbsp;        double variance = 0.00;</b>
+<b class="nc">&nbsp;        double standardDeviation = 0.00;</b>
+&nbsp;
+<b class="nc">&nbsp;        for( int i = 0; i &lt; transactions.size(); i ++ ) {</b>
+&nbsp;
+<b class="nc">&nbsp;            double current = transactions.get(i).getAmount();</b>
+&nbsp;
+<b class="nc">&nbsp;            current = abs(current - mean);</b>
+<b class="nc">&nbsp;            current *= current;</b>
+&nbsp;
+<b class="nc">&nbsp;            sum += current;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        variance = sum / (transactions.size() - 1);</b>
+&nbsp;
+<b class="nc">&nbsp;        standardDeviation = sqrt(variance);</b>
+&nbsp;
+<b class="nc">&nbsp;        if(transactions.size() &gt; 0)</b>
+<b class="nc">&nbsp;            return standardDeviation;</b>
+&nbsp;        else
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    //return count of total transactions
+&nbsp;    private int countAllTransactionsByDate(int userID, IDateTime startDate, IDateTime endDate) {
+<b class="nc">&nbsp;        List&lt;Transaction&gt; transactions = dataAccessTransaction.getTransactionsByDateTime(userID, startDate, endDate);</b>
+<b class="nc">&nbsp;        return transactions.size();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //return count of total categories
+&nbsp;    public int countAllCategories(int userID) {
+<b class="nc">&nbsp;        List&lt;MainCategory&gt; categories = dataAccessCategory.getAllCategory(userID);</b>
+<b class="nc">&nbsp;        return categories.size();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //return count of transactions with specific category
+&nbsp;    private int countTransactionsByCategoryByDate(int userID, int categoryID, IDateTime startDate, IDateTime endDate) {
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; categoryTransactions = new ArrayList&lt;Transaction&gt;();// = dataAccessTransaction.getTransactionByCategoryID(categoryID);</b>
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; transactionsInTimeframe = dataAccessTransaction.getTransactionsByDateTime(userID, startDate, endDate);</b>
+&nbsp;
+<b class="nc">&nbsp;        for(int i = 0; i &lt; transactionsInTimeframe.size(); i ++) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if( transactionsInTimeframe.get(i).getCategoryID() == categoryID )</b>
+<b class="nc">&nbsp;                categoryTransactions.add(transactionsInTimeframe.get(i));</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return categoryTransactions.size();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //return sum of total amount for all transactions
+&nbsp;    private double getTotalForAllTransactionsByDate(int userID, IDateTime startDate, IDateTime endDate) {
+<b class="nc">&nbsp;        List&lt;Transaction&gt; transactions = dataAccessTransaction.getTransactionsByDateTime(userID, startDate, endDate);</b>
+<b class="nc">&nbsp;        double total = 0.0;</b>
+&nbsp;
+<b class="nc">&nbsp;        for(Transaction element : transactions) {</b>
+<b class="nc">&nbsp;            total += element.getAmount();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return total;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //return sum of total amount for specified category
+&nbsp;    private double getTotalForCategoryByDate(int userID, int categoryID, IDateTime startDate, IDateTime endDate) {
+<b class="nc">&nbsp;        ArrayList&lt;Transaction&gt; transactionsInTimeframe = dataAccessTransaction.getTransactionsByDateTime(userID, startDate, endDate);</b>
+<b class="nc">&nbsp;        double total = 0.0;</b>
+&nbsp;
+<b class="nc">&nbsp;        for( int i = 0; i &lt; transactionsInTimeframe.size(); i++ ) {</b>
+&nbsp;
+<b class="nc">&nbsp;            Transaction element = transactionsInTimeframe.get(i);</b>
+&nbsp;
+<b class="nc">&nbsp;            if(element.getCategoryID() == categoryID)</b>
+&nbsp;                //for each CT, access its transaction, add the transaction value to total
+<b class="nc">&nbsp;                total += element.getAmount();</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return total;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //return average transaction amount for a given category
+&nbsp;    private double getAverageForCategoryByDate(int userID, int categoryID, IDateTime startDate, IDateTime endDate) {
+<b class="nc">&nbsp;        double total = getTotalForCategoryByDate(userID, categoryID, startDate, endDate);</b>
+<b class="nc">&nbsp;        int count = countTransactionsByCategoryByDate(userID, categoryID, startDate, endDate);</b>
+&nbsp;
+<b class="nc">&nbsp;        if(count &gt; 0)</b>
+<b class="nc">&nbsp;            return (total / count);</b>
+&nbsp;        else
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //return % of total transaction sum for given category
+&nbsp;    private double getPercentForCategoryByDate(int userID, int categoryID, IDateTime startDate, IDateTime endDate) {
+&nbsp;
+<b class="nc">&nbsp;        double totalAllTransactions = getTotalForAllTransactionsByDate(userID, startDate, endDate);</b>
+<b class="nc">&nbsp;        double totalForCategory = getTotalForCategoryByDate(userID, categoryID, startDate, endDate);</b>
+&nbsp;
+<b class="nc">&nbsp;        if(totalAllTransactions &gt; 0)</b>
+<b class="nc">&nbsp;            return ((totalForCategory / totalAllTransactions) * 100);</b>
+&nbsp;        else
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //sorting methods
+&nbsp;
+&nbsp;    //returns list of CategoryStatisticss (one for each category)
+&nbsp;    private ArrayList&lt;CategoryStatistics&gt; buildCategoryList(int userID, IDateTime startDate, IDateTime endDate) {
+<b class="nc">&nbsp;        ArrayList&lt;CategoryStatistics&gt; categoryList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        int numCategories = countAllCategories(userID);</b>
+&nbsp;
+<b class="nc">&nbsp;        for(int i = 1; i &lt; numCategories+1; i++) {</b>
+&nbsp;            //for each Category calculate -&gt; total, average, %
+<b class="nc">&nbsp;            MainCategory category = dataAccessCategory.getCategoryByID(i);</b>
+<b class="nc">&nbsp;            double total = getTotalForCategoryByDate(userID, i, startDate, endDate);</b>
+<b class="nc">&nbsp;            double average = getAverageForCategoryByDate(userID, i, startDate, endDate);</b>
+<b class="nc">&nbsp;            double percent = getPercentForCategoryByDate(userID, i, startDate, endDate);</b>
+&nbsp;
+<b class="nc">&nbsp;            CategoryStatistics node = new CategoryStatistics(category,total,average,percent);</b>
+<b class="nc">&nbsp;            categoryList.add(node);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return categoryList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

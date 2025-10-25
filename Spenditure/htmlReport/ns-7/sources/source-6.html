@@ -1,0 +1,202 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > MainCategory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.object</a>
+</div>
+
+<h1>Coverage Summary for Class: MainCategory (com.spenditure.object)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainCategory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (4/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    26.3%
+  </span>
+  <span class="absValue">
+    (10/38)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.object;
+&nbsp;
+&nbsp;import com.spenditure.logic.exceptions.InvalidSubCategoryException;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Iterator;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Main Category class
+&nbsp; * @author Bao Ngo
+&nbsp; * @version 06 Feb 2024
+&nbsp; */
+&nbsp;public class MainCategory implements IMainCategory {
+&nbsp;    //Attributes
+&nbsp;    private String name;
+&nbsp;    private int categoryID;
+&nbsp;    private int userID;
+&nbsp;    private List&lt;SubCategory&gt; listSubCategories; //For future development
+<b class="fc">&nbsp;    private final int MAX_SUB_CATEGORIES = 5;</b>
+<b class="fc">&nbsp;    private static int currentCategoryID = 1;</b>
+<b class="fc">&nbsp;    private static int currentUserID = 1;</b>
+&nbsp;
+&nbsp;    //Constructors
+<b class="fc">&nbsp;    public MainCategory(String name, int categoryID, int userID){</b>
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        this.categoryID = categoryID;</b>
+<b class="fc">&nbsp;        this.userID = userID;</b>
+<b class="fc">&nbsp;        this.listSubCategories = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Business methods
+&nbsp;    @Override
+&nbsp;    public String getName() {
+<b class="fc">&nbsp;        return this.name;</b>
+&nbsp;    }
+&nbsp;    @Override
+&nbsp;    public int getCategoryID() {
+<b class="fc">&nbsp;        return this.categoryID;</b>
+&nbsp;    }
+<b class="nc">&nbsp;    public int getUserID() { return this.userID;}</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;SubCategory&gt; getSubCategories() { //For future development
+<b class="nc">&nbsp;        return this.listSubCategories;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public SubCategory addSubCategory(String newSubCategoryName) throws InvalidSubCategoryException {
+<b class="nc">&nbsp;        if(this.listSubCategories.size() &gt;= 5){</b>
+<b class="nc">&nbsp;            throw new InvalidSubCategoryException(&quot;Only &quot; + this.MAX_SUB_CATEGORIES + &quot; sub-categories are allowed per Category&quot;);</b>
+&nbsp;        }else{
+<b class="nc">&nbsp;            if (checkUniqueSub(newSubCategoryName)){</b>
+<b class="nc">&nbsp;                SubCategory newSubCategory = new SubCategory(newSubCategoryName, generateUniqueCategoryID());</b>
+<b class="nc">&nbsp;                this.listSubCategories.add(newSubCategory);</b>
+<b class="nc">&nbsp;                return newSubCategory;</b>
+&nbsp;            }else{
+<b class="nc">&nbsp;                throw new InvalidSubCategoryException(newSubCategoryName + &quot; sub-category already exists&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void removeSubCategory(int id) throws InvalidSubCategoryException{
+<b class="nc">&nbsp;        Iterator&lt;SubCategory&gt; iterator = this.listSubCategories.iterator();</b>
+<b class="nc">&nbsp;        boolean found = false;</b>
+<b class="nc">&nbsp;        while (iterator.hasNext() &amp;&amp; !found) {</b>
+<b class="nc">&nbsp;            SubCategory curr = iterator.next();</b>
+<b class="nc">&nbsp;            if(curr.getCategoryID() == id){</b>
+<b class="nc">&nbsp;                iterator.remove();</b>
+<b class="nc">&nbsp;                found = true;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        if(!found) throw new InvalidSubCategoryException(&quot;Sub-category&#39;s ID not exist&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public SubCategory getSubCategoryByID(int id) throws InvalidSubCategoryException {
+<b class="nc">&nbsp;        for(SubCategory currSub : this.listSubCategories){</b>
+<b class="nc">&nbsp;            if(currSub.getCategoryID() == id) return currSub;</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        throw new InvalidSubCategoryException(&quot;Sub-category ID not exist&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /*
+&nbsp;     * Support methods
+&nbsp;     */
+&nbsp;    private boolean checkUniqueSub(String newSubCategoryName){
+<b class="nc">&nbsp;        for( SubCategory currSubCategory : this.listSubCategories){</b>
+<b class="nc">&nbsp;            if( currSubCategory.getName().equalsIgnoreCase(newSubCategoryName)) return false;</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static int generateUniqueCategoryID(){
+<b class="nc">&nbsp;        return currentCategoryID++;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    private static int generateUniqueUserID() { return currentUserID++; }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>

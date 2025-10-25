@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/report_slider_layout"
+    android:background="@color/black"
+    >
+    <TextView
+        android:text="Title"
+        android:id="@+id/slide_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:paddingTop="@dimen/space_1"
+        android:textStyle="bold"
+        android:textSize="@dimen/normal_size"
+        />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rowCount="2"
+        android:columnCount="2"
+        >
+
+        <!-- First quarter -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/symbol_doc" />
+
+            <TextView
+                android:id="@+id/textview_catReport_transactionsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20 transactions"
+                android:textSize="@dimen/normal_size"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Second quarter -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/symbol_addchart"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/textview_catReport_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$1000 CAD"
+                android:textSize="@dimen/normal_size"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Third quarter -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/symbol_calculate"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/textview_catReport_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 CAD"
+                android:textSize="@dimen/normal_size"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+
+        </LinearLayout>
+
+        <!-- Fourth quarter -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/symbol_pie_chart"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/textview_catReport_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20 %"
+                android:textSize="@dimen/normal_size"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+
+    </GridLayout>
+
+
+
+</LinearLayout>

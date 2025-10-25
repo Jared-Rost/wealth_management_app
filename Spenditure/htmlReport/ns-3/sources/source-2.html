@@ -1,0 +1,635 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TransactionSQL</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.spenditure.database.hsqldb</a>
+</div>
+
+<h1>Coverage Summary for Class: TransactionSQL (com.spenditure.database.hsqldb)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransactionSQL</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (16/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    68.2%
+  </span>
+  <span class="absValue">
+    (191/280)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.spenditure.database.hsqldb;
+&nbsp;
+&nbsp;import android.annotation.SuppressLint;
+&nbsp;
+&nbsp;import com.spenditure.database.TransactionPersistence;
+&nbsp;import com.spenditure.logic.exceptions.InvalidTransactionException;
+&nbsp;import com.spenditure.object.DateTime;
+&nbsp;import com.spenditure.object.IDateTime;
+&nbsp;import com.spenditure.object.Transaction;
+&nbsp;
+&nbsp;import java.sql.Connection;
+&nbsp;import java.sql.DriverManager;
+&nbsp;import java.sql.PreparedStatement;
+&nbsp;import java.sql.ResultSet;
+&nbsp;import java.sql.SQLException;
+&nbsp;import java.sql.Statement;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class TransactionSQL implements TransactionPersistence {
+&nbsp;
+&nbsp;    private final String dbPath;
+&nbsp;
+<b class="fc">&nbsp;    public TransactionSQL(final String dbPath) {</b>
+<b class="fc">&nbsp;        this.dbPath = dbPath;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Connection connection() throws SQLException {
+&nbsp;        //System.out.println(&quot;jdbc:hsqldb:file:&quot; + dbPath + &quot;;shutdown=true&quot;);
+<b class="fc">&nbsp;        return DriverManager.getConnection(&quot;jdbc:hsqldb:file:&quot; + dbPath + &quot;;shutdown=true&quot;, &quot;SA&quot;, &quot;&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private Transaction fromResultSet(final ResultSet rs) throws SQLException {
+&nbsp;        //System.out.println(&quot;in fromResultSet&quot;);
+<b class="fc">&nbsp;        final int transactionID = rs.getInt(&quot;TRANSACTIONID&quot;);</b>
+<b class="fc">&nbsp;        final int userID = rs.getInt(&quot;USERID&quot;);</b>
+<b class="fc">&nbsp;        final String name = rs.getString(&quot;NAME&quot;);</b>
+<b class="fc">&nbsp;        final String date = rs.getString(&quot;DATE&quot;);</b>
+<b class="fc">&nbsp;        final String place = rs.getString(&quot;PLACE&quot;);</b>
+<b class="fc">&nbsp;        final double amount = rs.getDouble(&quot;AMOUNT&quot;);</b>
+<b class="fc">&nbsp;        final String comments = rs.getString(&quot;COMMENTS&quot;);</b>
+<b class="fc">&nbsp;        final boolean withdrawal = rs.getBoolean(&quot;WITHDRAWAL&quot;);</b>
+<b class="fc">&nbsp;        final byte[] image = rs.getBytes(&quot;IMAGE&quot;);</b>
+<b class="fc">&nbsp;        final int categoryID = rs.getInt(&quot;CATEGORYID&quot;);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        DateTime dateTime = new DateTime(date);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new Transaction(transactionID, userID, name, dateTime, place, amount, comments, withdrawal, image, categoryID);</b>
+&nbsp;        //return null;
+&nbsp;        //return new MainCategory(categoryName, Integer.parseInt(categoryID), Integer.parseInt(userID));
+&nbsp;    }
+&nbsp;
+&nbsp;    private int getNextTransactionID() {
+<b class="fc">&nbsp;        int largestTransactionID = 1;</b>
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final Statement st = connection.createStatement();</b>
+<b class="fc">&nbsp;            final ResultSet rs = st.executeQuery(&quot;SELECT * FROM transactions&quot;);</b>
+<b class="fc">&nbsp;            while (rs.next())</b>
+&nbsp;            {
+&nbsp;
+<b class="fc">&nbsp;                int currTransactionID = rs.getInt(&quot;TRANSACTIONID&quot;);</b>
+<b class="fc">&nbsp;                if(currTransactionID &gt; largestTransactionID) {</b>
+<b class="fc">&nbsp;                    largestTransactionID = currTransactionID;</b>
+&nbsp;                }
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;            rs.close();</b>
+<b class="fc">&nbsp;            st.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return largestTransactionID+1;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public int countTransactions() {
+<b class="nc">&nbsp;        int count = 0;</b>
+<b class="nc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="nc">&nbsp;            final Statement st = connection.createStatement();</b>
+<b class="nc">&nbsp;            final ResultSet rs = st.executeQuery(&quot;SELECT * FROM transactions&quot;);</b>
+<b class="nc">&nbsp;            while (rs.next())</b>
+&nbsp;            {
+<b class="nc">&nbsp;                count++;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            rs.close();</b>
+<b class="nc">&nbsp;            st.close();</b>
+&nbsp;
+<b class="nc">&nbsp;            return count;</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;Transaction&gt; getAllTransactions(int userID) {
+<b class="fc">&nbsp;        List&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions\nWHERE userID=?&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1,userID);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;//            final Statement st = connection.createStatement();
+&nbsp;//            final ResultSet rs = st.executeQuery(&quot;SELECT * FROM transactions\nWHERE USERID=?&quot;);
+<b class="fc">&nbsp;            while (resultSet.next())</b>
+&nbsp;            {
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="fc">&nbsp;                transactions.add(transaction);</b>
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return transactions;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    public List&lt;Transaction&gt; getAllTransactionsForUser(int userID) {
+<b class="nc">&nbsp;        List&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="nc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions\nWHERE userID=?&quot;);</b>
+<b class="nc">&nbsp;            statement.setInt(1,userID);</b>
+&nbsp;
+<b class="nc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="nc">&nbsp;            while(resultSet.next()) {</b>
+<b class="nc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="nc">&nbsp;                transactions.add(transaction);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            resultSet.close();</b>
+<b class="nc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="nc">&nbsp;            return transactions;</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean addTransaction(Transaction transaction) {
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;INSERT INTO TRANSACTIONS VALUES(?,?,?,?,?,?,?,?,?,?)&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            if(transaction.getTransactionID() == -1) {</b>
+<b class="fc">&nbsp;                transaction.setTransactionID(getNextTransactionID());</b>
+&nbsp;            }
+<b class="fc">&nbsp;            statement.setInt(1, transaction.getTransactionID());</b>
+<b class="fc">&nbsp;            statement.setInt(2,transaction.getUserID());</b>
+<b class="fc">&nbsp;            statement.setString(3,transaction.getName());</b>
+<b class="fc">&nbsp;            statement.setString(4,transaction.getDateTime().getYearMonthDay());</b>
+<b class="fc">&nbsp;            statement.setString(5,transaction.getPlace());</b>
+<b class="fc">&nbsp;            statement.setDouble(6,transaction.getAmount());</b>
+<b class="fc">&nbsp;            statement.setString(7,transaction.getComments());</b>
+<b class="fc">&nbsp;            statement.setBoolean(8,transaction.getWithdrawal());</b>
+<b class="fc">&nbsp;            statement.setBytes(9, transaction.getImage());</b>
+<b class="fc">&nbsp;            statement.setInt(10,transaction.getCategoryID());</b>
+&nbsp;
+<b class="fc">&nbsp;            statement.executeUpdate();</b>
+&nbsp;
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return true;</b>
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean modifyTransaction(Transaction transaction) {
+<b class="fc">&nbsp;        try (Connection connection = connection()) {</b>
+&nbsp;
+<b class="fc">&nbsp;            PreparedStatement statement = connection.prepareStatement(&quot;UPDATE TRANSACTIONS SET NAME=?, DATE=?, PLACE=?, AMOUNT=?, COMMENTS=?, WITHDRAWAL=?, IMAGE=?, CATEGORYID=? WHERE transactionID=?&quot;);</b>
+&nbsp;            //statement.setInt(1, transaction.getTransactionID());
+&nbsp;            //statement.setInt(2,transaction.getUserID());
+<b class="fc">&nbsp;            statement.setString(1,transaction.getName());</b>
+<b class="fc">&nbsp;            statement.setString(2,transaction.getDateTime().getYearMonthDay());</b>
+<b class="fc">&nbsp;            statement.setString(3,transaction.getPlace());</b>
+<b class="fc">&nbsp;            statement.setDouble(4,transaction.getAmount());</b>
+<b class="fc">&nbsp;            statement.setString(5,transaction.getComments());</b>
+<b class="fc">&nbsp;            statement.setBoolean(6,transaction.getWithdrawal());</b>
+<b class="fc">&nbsp;            statement.setBytes(7, transaction.getImage());</b>
+<b class="fc">&nbsp;            statement.setInt(8,transaction.getCategoryID());</b>
+<b class="fc">&nbsp;            statement.setInt(9, transaction.getTransactionID());</b>
+&nbsp;
+<b class="fc">&nbsp;            statement.executeUpdate();</b>
+&nbsp;
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;
+&nbsp;            // Delete the existing transaction with the given transactionID
+&nbsp;//            try (PreparedStatement deleteStatement = connection.prepareStatement(&quot;DELETE FROM transactions WHERE TRANSACTIONID = ?&quot;)) {
+&nbsp;//                deleteStatement.setInt(1, transaction.getTransactionID());
+&nbsp;//                deleteStatement.executeUpdate();
+&nbsp;//            }
+&nbsp;//
+&nbsp;//            // Insert the new transaction object
+&nbsp;//            try (PreparedStatement insertStatement = connection.prepareStatement(&quot;INSERT INTO transactions (transactionID, amount, image) VALUES (?, ?, ?)&quot;)) {
+&nbsp;//                insertStatement.setInt(1, transaction.getTransactionID());
+&nbsp;//                insertStatement.setDouble(2, transaction.getAmount());
+&nbsp;//                insertStatement.setBytes(3, transaction.getImage());
+&nbsp;//                int rowsInserted = insertStatement.executeUpdate();
+&nbsp;//
+&nbsp;//                return rowsInserted &gt; 0; // Return true if row(s) inserted successfully
+&nbsp;//            }
+&nbsp;            //final PreparedStatement statement = connection.prepareStatement(&quot;INSERT INTO TRANSACTIONS VALUES(?,?,?,?,?,?,?,?,?,?)&quot;);
+&nbsp;
+<b class="fc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);</b>
+&nbsp;        }
+&nbsp;        //return false;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean deleteTransaction(int transactionID) {
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;DELETE FROM transactions\nWHERE TRANSACTIONID=?&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1,transactionID);</b>
+&nbsp;
+<b class="fc">&nbsp;            int row = statement.executeUpdate();</b>
+&nbsp;
+<b class="fc">&nbsp;            return row &gt; 0; //true if row number is greater than 0</b>
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Transaction getTransactionByID(int transactionID) {
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions\nWHERE TRANSACTIONID=?&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1,transactionID);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            if (resultSet.next()) {</b>
+&nbsp;                // If there are rows, retrieve data and create a Transaction object
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+&nbsp;
+&nbsp;                // Close ResultSet and PreparedStatement
+<b class="fc">&nbsp;                resultSet.close();</b>
+<b class="fc">&nbsp;                statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;                return transaction;</b>
+&nbsp;            } else {
+&nbsp;                // If no rows found, return null or throw an exception based on your design
+&nbsp;                //throw new InvalidTransactionException(&quot;Transaction with ID &quot; + transactionID + &quot; not found&quot;);
+<b class="fc">&nbsp;                return null;</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionByName(int userID, String name) {
+<b class="fc">&nbsp;        final ArrayList&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions\nWHERE NAME=? AND USERID=?&quot;);</b>
+<b class="fc">&nbsp;            statement.setString(1,name);</b>
+<b class="fc">&nbsp;            statement.setInt(2, userID);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            while(resultSet.next()) {</b>
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="fc">&nbsp;                transactions.add(transaction);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return transactions;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionsByPlace(int userID, String place) {
+<b class="fc">&nbsp;        final ArrayList&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions\nWHERE PLACE=? AND USERID=?&quot;);</b>
+<b class="fc">&nbsp;            statement.setString(1,place);</b>
+<b class="fc">&nbsp;            statement.setInt(2, userID);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            while(resultSet.next()) {</b>
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="fc">&nbsp;                transactions.add(transaction);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return transactions;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionsByAmount(int userID, double lower, double upper) {
+<b class="fc">&nbsp;        final ArrayList&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions WHERE USERID=? AND amount &gt;= ? AND amount &lt;= ?&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1,userID);</b>
+<b class="fc">&nbsp;            statement.setDouble(2,lower);</b>
+<b class="fc">&nbsp;            statement.setDouble(3,upper);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            while(resultSet.next()) {</b>
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="fc">&nbsp;                transactions.add(transaction);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return transactions;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;            //e.printStackTrace();
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionsByDateTime(int userID, IDateTime lower, IDateTime upper) {
+<b class="fc">&nbsp;        final ArrayList&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions WHERE userID =? AND date &gt;= ? AND date &lt;= ?&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1, userID);</b>
+<b class="fc">&nbsp;            statement.setString(2,lower.getYearMonthDay());</b>
+<b class="fc">&nbsp;            statement.setString(3,upper.getYearMonthDay());</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            while(resultSet.next()) {</b>
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="fc">&nbsp;                transactions.add(transaction);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return transactions;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getTransactionsByCategoryID(int categoryID) {
+<b class="fc">&nbsp;        System.out.println(&quot;getTransactionsByCategoryID in TransactionSQL&quot;);</b>
+<b class="fc">&nbsp;        ArrayList&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            System.out.println(&quot;getTransactionsByCategoryID in TransactionSQL&quot;);</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions\nWHERE CATEGORYID=?&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;getTransactionsByCategoryID in TransactionSQL&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1,categoryID);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            while(resultSet.next()) {</b>
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="fc">&nbsp;                transactions.add(transaction);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return transactions;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getNewestTransactionsForUser(int userID) {
+<b class="fc">&nbsp;        ArrayList&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions\nWHERE USERID = ?\nORDER BY DATE DESC;&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1,userID);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            while(resultSet.next()) {</b>
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="fc">&nbsp;                transactions.add(transaction);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return transactions;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;Transaction&gt; getOldestTransactionsForUser(int userID) {
+<b class="fc">&nbsp;        ArrayList&lt;Transaction&gt; transactions = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="fc">&nbsp;            final PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM transactions\nWHERE USERID = ?\nORDER BY DATE;&quot;);</b>
+<b class="fc">&nbsp;            statement.setInt(1,userID);</b>
+&nbsp;
+<b class="fc">&nbsp;            final ResultSet resultSet = statement.executeQuery();</b>
+&nbsp;
+<b class="fc">&nbsp;            while(resultSet.next()) {</b>
+<b class="fc">&nbsp;                final Transaction transaction = fromResultSet(resultSet);</b>
+<b class="fc">&nbsp;                transactions.add(transaction);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            resultSet.close();</b>
+<b class="fc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            return transactions;</b>
+&nbsp;
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void getCourseSequential() {
+&nbsp;        //final List&lt;Course&gt; courses = new ArrayList&lt;&gt;();
+&nbsp;
+<b class="nc">&nbsp;        try (final Connection c = connection()) {</b>
+<b class="nc">&nbsp;            final Statement st = c.createStatement();</b>
+<b class="nc">&nbsp;            final ResultSet rs = st.executeQuery(&quot;SELECT TABLE_NAME\n&quot; +</b>
+&nbsp;                    &quot;FROM INFORMATION_SCHEMA.TABLES\n&quot; +
+&nbsp;                    &quot;WHERE TABLE_SCHEMA = &#39;PUBLIC&#39;;\n&quot;);
+&nbsp;
+<b class="nc">&nbsp;            System.out.println(&quot;LOOK HERE!!!!!!!!!!!!!&quot;);</b>
+<b class="nc">&nbsp;            if(!rs.next()) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;F&#39;s in chat gentlemen&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            while (rs.next())</b>
+&nbsp;            {
+&nbsp;//                final Course course = fromResultSet(rs);
+&nbsp;//                courses.add(course);
+&nbsp;                //System.out.println(rs.getString(&quot;TABLE_NAME&quot;));
+<b class="nc">&nbsp;                System.out.println(&quot;Maybe Baby&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            rs.close();</b>
+<b class="nc">&nbsp;            st.close();</b>
+&nbsp;
+&nbsp;            //return courses;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e)</b>
+&nbsp;        {
+&nbsp;            //throw new PersistenceException(e);
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void printTransactionTable() {
+<b class="nc">&nbsp;        try(final Connection connection = connection()) {</b>
+<b class="nc">&nbsp;            final Statement st = connection.createStatement();</b>
+<b class="nc">&nbsp;            final ResultSet rs = st.executeQuery(&quot;SELECT * FROM transactions&quot;);</b>
+<b class="nc">&nbsp;            while (rs.next())</b>
+&nbsp;            {
+<b class="nc">&nbsp;                final int transactionID = rs.getInt(&quot;TRANSACTIONID&quot;);</b>
+<b class="nc">&nbsp;                final int userID = rs.getInt(&quot;USERID&quot;);</b>
+<b class="nc">&nbsp;                final String name = rs.getString(&quot;NAME&quot;);</b>
+<b class="nc">&nbsp;                final String date = rs.getString(&quot;DATE&quot;);</b>
+<b class="nc">&nbsp;                final String place = rs.getString(&quot;PLACE&quot;);</b>
+<b class="nc">&nbsp;                final double amount = rs.getDouble(&quot;AMOUNT&quot;);</b>
+<b class="nc">&nbsp;                final String comments = rs.getString(&quot;COMMENTS&quot;);</b>
+<b class="nc">&nbsp;                final boolean withdrawal = rs.getBoolean(&quot;WITHDRAWAL&quot;);</b>
+<b class="nc">&nbsp;                final byte[] image = rs.getBytes(&quot;IMAGE&quot;);</b>
+<b class="nc">&nbsp;                final int categoryID = rs.getInt(&quot;CATEGORYID&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                @SuppressLint(&quot;DefaultLocale&quot;) String printUser = String.format(&quot;TransactionID: %d, UserID: %d, Name: %s, Date: %s, Place: %s, Amount: %f, CategoryID: %d&quot;, transactionID, userID, name, date, place, amount, categoryID);</b>
+<b class="nc">&nbsp;                System.out.println(printUser);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            rs.close();</b>
+<b class="nc">&nbsp;            st.close();</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        catch (final SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while processing the SQL operation&quot;, e);  //temp exception</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-05 12:38</div>
+</div>
+</body>
+</html>
